@@ -92,7 +92,6 @@ QMap<QString, QList<float>> Folder_CalculateSize::dirSize(const QString &path)
 
     list = {size};
     map.insert("", list);
-    qDebug()<<"map os "<< map;
     return map;
 }
 

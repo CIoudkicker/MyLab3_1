@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
 
     //testFunc("E:\\Qt Projects");
 
-    ICalculateSize *Folder = new Folder_CalculateSize("E:\\Qt Projects\\");
-    ICalculateSize *Type = new Type_CalculateSize("E:\\Qt Projects\\");
+    ICalculateSize *Folder = new Folder_CalculateSize("E:\Загрузки\test");
+    ICalculateSize *Type = new Type_CalculateSize("E:\Загрузки\test");
 
     QMap<QString, QList<float>> folder_size = Folder->dirSize();
     QMap<QString, QList<float>> type_size = Type->dirSize();
