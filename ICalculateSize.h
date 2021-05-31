@@ -11,12 +11,10 @@
 #include<QFileInfo>
 #include<QString>
 #include<QList>
-#include<QVector2D>
-#include<QVector>
 #include<QMap>
-#include<QMultiMap>
+
 #include<QDebug>
-#include<stack>
+
 
 class ICalculateSize{
 
