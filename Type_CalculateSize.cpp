@@ -102,10 +102,11 @@ QMap<QString, QList<float>> Type_CalculateSize::dirSize(const QString &path)
         qDebug().noquote().nospace() <<"size of {"<< subDir << "} is "<< givenSize <<" [summary size is "<< Type_CalculateSize::size <<"]";
     }
     QMap<QString, QList<float>>::Iterator i = map.begin();
+    int size1 = Type_CalculateSize::size;
     while (i != map.end()) {
         QList<float> val;
         val = i.value();
-        val.append(ICalculateSize::trim(val[0]/(size/100)));
+        val.append(ICalculateSize::trim(val[0]/(size1/100)));
         map[i.key()] = val;
         i++;
     }

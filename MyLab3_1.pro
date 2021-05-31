@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     Folder_CalculateSize.cpp \
     ICalculateSize.cpp \
+    Type_CalculateSize.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Folder_CalculateSize.h \
     ICalculateSize.h \
+    Type_CalculateSize.h \
     mainwindow.h
 
 FORMS += \
