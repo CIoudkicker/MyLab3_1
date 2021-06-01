@@ -15,6 +15,7 @@
 #include"ICalculateSize.h"
 #include"Folder_CalculateSize.h"
 #include"Type_CalculateSize.h"
+#include"Context.h"
 
 using namespace std;
 
@@ -31,18 +32,19 @@ void printMap(QMap<QString, QList<float>> map){
 int main(int argc, char *argv[])
 {
 
-    //testFunc("E:\\Qt Projects");
+    Context *conext = new Context();
 
-    ICalculateSize *Folder = new Folder_CalculateSize("E:\Загрузки\test");
-    ICalculateSize *Type = new Type_CalculateSize("E:\Загрузки\test");
+    QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize("E:\\Qt Projects\\MyLab_2_0"));
+    QMap<QString, QList<float>> type_size = conext->dirSize(new Type_CalculateSize("E:\\Qt Projects\\MyLab_2_0"));
 
-    QMap<QString, QList<float>> folder_size = Folder->dirSize();
-    QMap<QString, QList<float>> type_size = Type->dirSize();
+
     qDebug() << "СОРТИРОВКА ПАПОК\n";
     printMap(folder_size);
     qDebug() << "СОРТИРОВКА ПО ТИПАМ\n";
     printMap(type_size);
     qDebug()<< "";
+
+
     /*
     QApplication a(argc, argv);
     MainWindow w;
