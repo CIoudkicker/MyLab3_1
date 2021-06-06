@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QString>
-#include <QFileSystemModel>
-#include <QDir>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -12,14 +10,28 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
+    setCentralWidget(tree);
+
+    QList<QStandardItem *> preparedRow = QList<QString>("first", "second", "third");
+    QStandardItem *item = leftDirFileSys->invisibleRootItem();
+    // adding a row to the invisible root item produces a root element
+    item->appendRow(preparedRow);
+
+    QList<QStandardItem *> secondRow = prepareRow("111", "222", "333");
+    // adding a row to an item starts a subtree
+    preparedRow.first()->appendRow(secondRow);
+
+    treeView->setModel(standardModel);
+    treeView->expandAll();
+
     QString path = "E:\\Документы\\";
     leftDirFileSys = new QFileSystemModel(this);
     leftDirFileSys->setFilter(QDir::NoDotAndDotDot | QDir::QDir::AllEntries);
     leftDirFileSys->setRootPath(path);
-    ui->listView->setModel(leftDirFileSys);
+    ui->treeView->setModel(leftDirFileSys);
     ui->listView_2->setModel(leftDirFileSys);
 
-    connect(ui->listView, SIGNAL(doubleClicked(QModeIndex)), this, SLOT(on_listView_doubleClicked(const QModelIndex &index)));
+    connect(ui->treeView, SIGNAL(doubleClicked(QModeIndex)), this, SLOT(on_listView_doubleClicked(const QModelIndex &index)));
 
 }
 
@@ -45,4 +57,16 @@ void MainWindow::on_listView_doubleClicked(const QModelIndex &index){
         qDebug() << "OPPA "<< fileInfo.absoluteFilePath();
     }
 
+}
+
+void MainWindow::on_treeView_activated(const QModelIndex &index){
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(index);
+
+    qDebug() << "OPPA "<< fileInfo.absoluteFilePath();
+}
+
+void MainWindow::on_treeView_expanded(const QModelIndex &index){
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(index);
+
+    qDebug() << "OPPA "<< fileInfo.absoluteFilePath();
 }

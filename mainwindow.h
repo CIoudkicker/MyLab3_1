@@ -5,6 +5,12 @@
 #include <QFileSystemModel>
 #include <QDir>
 #include <QString>
+#include <QtGui>
+#include <QList>
+#include <QTreeView>
+#include <QListView>
+#include <QItemSelectionModel>
+#include <QStandardItem>
 #include <QDebug>
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +27,10 @@ public:
 
 private slots:
     void on_listView_doubleClicked(const QModelIndex &index);
+
+    void on_treeView_activated(const QModelIndex &index);
+
+    void on_treeView_expanded(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
