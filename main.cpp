@@ -44,11 +44,8 @@ int main(int argc, char *argv[])
     printMap(type_size);
     qDebug()<< "";
 
-
-    /*
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    */
-    return 1;
+    return a.exec();
 }
