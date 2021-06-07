@@ -2,8 +2,8 @@
 
 QMap<QString, QList<float>> Context::dirSize(ICalculateSize *calc){
     QMap<QString, QList<float>> map;
-    map = calc->dirSize();
     if(calc != NULL){
-        return map;
+        map = calc->dirSize();
     }
+    return map;
 }
