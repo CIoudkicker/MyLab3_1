@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
 
     Context *conext = new Context();
 
-    QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize("E:\\Qt Projects\\MyLab_2_0"));
-    QMap<QString, QList<float>> type_size = conext->dirSize(new Type_CalculateSize("E:\\Qt Projects\\MyLab_2_0"));
+    QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize("E:/Загрузки/test/test"));
+    QMap<QString, QList<float>> type_size = conext->dirSize(new Type_CalculateSize("E:/Загрузки/test/test/1"));
 
 
     qDebug() << "СОРТИРОВКА ПАПОК\n";
