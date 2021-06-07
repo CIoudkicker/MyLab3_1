@@ -2,6 +2,7 @@
 
 float ICalculateSize::trim(float in)    // округляет число
 {
+
    int v1 = static_cast<int>(in);
    int v2 = static_cast<int>((in - v1)*100);
    float v3 = (in - v1)*100 - v2;

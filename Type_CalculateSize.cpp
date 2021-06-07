@@ -106,7 +106,11 @@ QMap<QString, QList<float>> Type_CalculateSize::dirSize(const QString &path)
     while (i != map.end()) {
         QList<float> val;
         val = i.value();
-        val.append(ICalculateSize::trim(val[0]/(size1/100)));
+        if(val[0] == 0){
+            val.append(ICalculateSize::trim(0));
+        }else{
+            val.append(ICalculateSize::trim(val[0]/(size1/100)));
+        }
         map[i.key()] = val;
         i++;
     }

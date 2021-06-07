@@ -85,7 +85,12 @@ QMap<QString, QList<float>> Folder_CalculateSize::dirSize(const QString &path)
         //qDebug().noquote().nospace() <<"value " << i.key();
         QList<float> val;
         val = i.value();
-        val.append(ICalculateSize::trim(val[0]/(size/100)));
+        if(val[0] == 0){
+            val.append(ICalculateSize::trim(0));
+        }else{
+            val.append(ICalculateSize::trim(val[0]/(size/100)));
+        }
+
         map[i.key()] = val;
         i++;
     }
