@@ -21,9 +21,9 @@ QVariant CalculateSizeModel::data(const QModelIndex &index, int role) const {
         case Qt::DisplayRole:
             QMap<QString, QList<float>>::const_iterator i = map.begin();
             i += index.row();
-            QString size = QString::number(i.value()[0]);
+            QString size = QString::number(i.value()[0],'g', 20);
             if(i.value().count()> 1){
-                QString procent = QString::number(i.value()[1]);
+                QString procent = QString::number(i.value()[1],'g', 20);
                 return i.key() + " size " + size + " procent " + procent;
             }else{
                 return i.key() + " size " + size;

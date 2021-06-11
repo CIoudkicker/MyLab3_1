@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listView->setModel(CalcSizeModel);
     ui->treeView_2->setModel(CalcTableModel);
 
+
+
     connect(ui->treeView, SIGNAL(doubleClicked(QModeIndex)), this, SLOT(on_listView_doubleClicked(const QModelIndex &index)));
 
 }
@@ -55,6 +57,7 @@ void MainWindow::on_treeView_activated(const QModelIndex &index){
 
     if(index.isValid()){
         CalcSizeModel->append(fileInfo.absoluteFilePath());
+        CalcTableModel->append(fileInfo.absoluteFilePath());
     }
 
     qDebug() << "OPPA "<< fileInfo.absoluteFilePath();

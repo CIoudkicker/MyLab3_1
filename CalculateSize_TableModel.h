@@ -2,6 +2,9 @@
 #define CALCULATESIZE_TABLEMODEL_H
 
 #include <QAbstractTableModel>
+#include "Folder_CalculateSize.h"
+#include "Context.h"
+
 
 class CalculateSize_TableModel : public QAbstractTableModel{
 
@@ -15,6 +18,7 @@ class CalculateSize_TableModel : public QAbstractTableModel{
         int columnCount(const QModelIndex &index = QModelIndex())const override;
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+        void append(QString path);
 
     private:
 

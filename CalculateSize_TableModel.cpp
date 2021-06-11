@@ -3,12 +3,12 @@
 CalculateSize_TableModel::CalculateSize_TableModel(QObject *parent):
     QAbstractTableModel(parent)
 {
-
+    map = QMap<QString, QList<float>>();
 }
 
 
 int CalculateSize_TableModel::rowCount(const QModelIndex &)const {
-    return 1;
+    return map.count();
 }
 
 
@@ -20,10 +20,25 @@ QVariant CalculateSize_TableModel::data(const QModelIndex &index, int role) cons
 
     switch (role) {
         case Qt::DisplayRole:
-            if(index.row() == 0 && index.column() == 0){
-                return "fdsfd";
+            QMap<QString, QList<float>>::const_iterator i = map.begin();
+            i += index.row();
+            if(map.empty()){
+                return QVariant();;
             }
-            return "dad";
+
+            if(i.value().count()> 1){
+                QString size = QString::number(i.value()[0],'g', 20);
+                QString procent = QString::number(i.value()[1]);
+                if(index.column() == 0) return i.key();
+                if(index.column() == 1) return size;
+                if(index.column() == 2) return procent;
+                return i.key() + " size " + size + " procent " + procent;
+            }else if (i.value().count() == 1){
+                QString size = QString::number(i.value()[0],'g', 20);
+                if(index.column() == 0) return "Total Size";
+                if(index.column() == 1) return size;
+                if(index.column() == 2) return "";
+            }
         break;
     }
     return QVariant();
@@ -35,12 +50,20 @@ QVariant CalculateSize_TableModel::headerData(int section, Qt::Orientation orien
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
         case 0:
-            return QString("first");
+            return QString("Name");
         case 1:
-            return QString("second");
+            return QString("Size");
         case 2:
-            return QString("third");
+            return QString("Procent");
         }
     }
     return QVariant();
+}
+
+void CalculateSize_TableModel::append(QString path){
+    beginInsertRows(QModelIndex(), map.count(), map.count());
+    Context *conext = new Context;
+    QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize(path));
+    map = folder_size;
+    endInsertRows();
 }
