@@ -13,6 +13,7 @@ using namespace std;
 
 class CalculateSizeModel : public QAbstractListModel
 {
+    Q_OBJECT
     public:
 
         CalculateSizeModel(QObject *parent);
@@ -27,6 +28,7 @@ class CalculateSizeModel : public QAbstractListModel
 
         //void appendRow(const)
 
+    private:
 
         QMap<QString, QList<float>> map;
 };

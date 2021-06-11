@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     CalculateSizeModel.cpp \
+    CalculateSize_TableModel.cpp \
     Context.cpp \
     Folder_CalculateSize.cpp \
     ICalculateSize.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     CalculateSizeModel.h \
+    CalculateSize_TableModel.h \
     Context.h \
     Folder_CalculateSize.h \
     ICalculateSize.h \
@@ -35,5 +37,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     .gitignore \
+    CalculateTableView.qml \
     MyLab3_1.pro.user \
     README.md

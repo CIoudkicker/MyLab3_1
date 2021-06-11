@@ -9,16 +9,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
-
     QString path = "E:\\Документы\\";
+
     leftDirFileSys = new QFileSystemModel(this);
     CalcSizeModel = new CalculateSizeModel(this);
+    CalcTableModel = new CalculateSize_TableModel(this);
+
     leftDirFileSys->setFilter(QDir::NoDotAndDotDot | QDir::QDir::AllEntries);
     leftDirFileSys->setRootPath(path);
+
     ui->treeView->setModel(leftDirFileSys);
     ui->listView->setModel(CalcSizeModel);
+    ui->treeView_2->setModel(CalcTableModel);
+
     connect(ui->treeView, SIGNAL(doubleClicked(QModeIndex)), this, SLOT(on_listView_doubleClicked(const QModelIndex &index)));
 
 }

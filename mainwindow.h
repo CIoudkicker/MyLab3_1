@@ -4,15 +4,16 @@
 #include <QMainWindow>
 #include <QFileSystemModel>
 #include "CalculateSizeModel.h"
+#include "CalculateSize_TableModel.h"
 #include <QDir>
 #include <QString>
-#include <QtGui>
 #include <QList>
 #include <QTreeView>
 #include <QListView>
 #include <QItemSelectionModel>
 #include <QStandardItem>
 #include <QDebug>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     QFileSystemModel *leftDirFileSys;
     CalculateSizeModel *CalcSizeModel;
+    CalculateSize_TableModel *CalcTableModel;
 
 };
 #endif // MAINWINDOW_H

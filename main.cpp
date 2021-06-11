@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+
 #include <iostream>
 #include <variant>
 #include <string>
@@ -31,6 +32,8 @@ void printMap(QMap<QString, QList<float>> map){
 
 int main(int argc, char *argv[])
 {
+
+
 
     Context *conext = new Context();
 
