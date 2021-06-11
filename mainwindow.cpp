@@ -14,11 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     QString path = "E:\\Документы\\";
     leftDirFileSys = new QFileSystemModel(this);
+    CalcSizeModel = new CalculateSizeModel(this);
     leftDirFileSys->setFilter(QDir::NoDotAndDotDot | QDir::QDir::AllEntries);
     leftDirFileSys->setRootPath(path);
     ui->treeView->setModel(leftDirFileSys);
-    ui->treeView_2->setModel(leftDirFileSys);
-
+    ui->listView->setModel(CalcSizeModel);
     connect(ui->treeView, SIGNAL(doubleClicked(QModeIndex)), this, SLOT(on_listView_doubleClicked(const QModelIndex &index)));
 
 }
@@ -49,6 +49,10 @@ void MainWindow::on_listView_doubleClicked(const QModelIndex &index){
 
 void MainWindow::on_treeView_activated(const QModelIndex &index){
     QFileInfo fileInfo = leftDirFileSys->fileInfo(index);
+
+    if(index.isValid()){
+        CalcSizeModel->append(fileInfo.absoluteFilePath());
+    }
 
     qDebug() << "OPPA "<< fileInfo.absoluteFilePath();
 }

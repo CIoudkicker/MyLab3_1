@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QFileSystemModel>
+#include "CalculateSizeModel.h"
 #include <QDir>
 #include <QString>
 #include <QtGui>
@@ -35,5 +36,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *leftDirFileSys;
+    CalculateSizeModel *CalcSizeModel;
+
 };
 #endif // MAINWINDOW_H
