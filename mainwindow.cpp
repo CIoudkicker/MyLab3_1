@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     leftDirFileSys->setRootPath(path);
 
     ui->treeView->setModel(leftDirFileSys);
-    ui->listView->setModel(CalcSizeModel);
+
     ui->treeView_2->setModel(CalcTableModel);
 
 
