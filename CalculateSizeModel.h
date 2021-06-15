@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <QAbstractListModel>
+#include <ICalculateSize.h>
 #include "Folder_CalculateSize.h"
 #include "Context.h"
 #include <QList>
@@ -31,6 +32,8 @@ class CalculateSizeModel : public QAbstractListModel
     private:
 
         QMap<QString, QList<float>> map;
+
+
 };
 
 #endif // CALCULATESIZEMODEL_H

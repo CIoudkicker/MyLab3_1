@@ -53,18 +53,54 @@ void MainWindow::on_listView_doubleClicked(const QModelIndex &index){
 }
 
 void MainWindow::on_treeView_activated(const QModelIndex &index){
-    QFileInfo fileInfo = leftDirFileSys->fileInfo(index);
+
+    Currentindex = index;
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
 
     if(index.isValid()){
         CalcSizeModel->append(fileInfo.absoluteFilePath());
         CalcTableModel->append(fileInfo.absoluteFilePath());
     }
 
-    qDebug() << "OPPA "<< fileInfo.absoluteFilePath();
+    qDebug() << "OPPA on_treeView_activated"<< fileInfo.absoluteFilePath();
 }
 
 void MainWindow::on_treeView_expanded(const QModelIndex &index){
-    QFileInfo fileInfo = leftDirFileSys->fileInfo(index);
+    /*
+    Currentindex = index;
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
+    qDebug() << "OPPA on_treeView_expanded"<< fileInfo.absoluteFilePath();
+    */
+}
 
-    qDebug() << "OPPA "<< fileInfo.absoluteFilePath();
+
+void MainWindow::on_radioButton_toggled(bool checked)
+{
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
+    CalcTableModel->changeStrat(CalculateSize_TableModel::Strategies::Folder_CalculateSize, fileInfo.absoluteFilePath());
+    qDebug() << "radio 1.1";
+}
+
+
+void MainWindow::on_radioButton_2_toggled(bool checked)
+{
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
+    CalcTableModel->changeStrat(CalculateSize_TableModel::Strategies::Type_CalculateSize, fileInfo.absoluteFilePath());
+    qDebug() << "radio 1.2";
+}
+
+void MainWindow::on_radioButton_3_toggled(bool checked)
+{
+
+}
+
+void MainWindow::on_treeView_doubleClicked(const QModelIndex &index)
+{
+    Currentindex = index;
+    QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
+
+    if(index.isValid()){
+        CalcSizeModel->append(fileInfo.absoluteFilePath());
+        CalcTableModel->append(fileInfo.absoluteFilePath());
+    }
 }

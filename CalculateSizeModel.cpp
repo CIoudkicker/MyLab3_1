@@ -51,6 +51,7 @@ void CalculateSizeModel::append(QString path){
     Context *conext = new Context;
     QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize(path));
     map = folder_size;
-
     endInsertRows();
 }
+
+

@@ -12,6 +12,8 @@
 #include <QListView>
 #include <QItemSelectionModel>
 #include <QStandardItem>
+#include <QGroupBox>
+#include <QModelIndex>
 #include <QDebug>
 
 
@@ -34,11 +36,29 @@ private slots:
 
     void on_treeView_expanded(const QModelIndex &index);
 
+    void on_radioButton_clicked();
+
+    void on_radioButton_clicked(bool checked);
+
+    void on_radioButton_pressed();
+
+    void on_radioButton_toggled(bool checked);
+
+    void on_radioButton_released();
+
+    void on_radioButton_2_toggled(bool checked);
+
+    void on_radioButton_3_toggled(bool checked);
+
+    void on_treeView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
+    QModelIndex Currentindex;
     QFileSystemModel *leftDirFileSys;
     CalculateSizeModel *CalcSizeModel;
     CalculateSize_TableModel *CalcTableModel;
+    QGroupBox *groupbox();
 
 };
 #endif // MAINWINDOW_H

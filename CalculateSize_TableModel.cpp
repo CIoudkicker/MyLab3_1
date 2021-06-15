@@ -31,7 +31,13 @@ QVariant CalculateSize_TableModel::data(const QModelIndex &index, int role) cons
                 QString procent = QString::number(i.value()[1]);
                 if(index.column() == 0) return i.key();
                 if(index.column() == 1) return size;
-                if(index.column() == 2) return procent;
+                if(index.column() == 2){
+                    if(size != 0 && i.value()[1] == 0){
+                        return "< 0.01";
+                    }else{
+                        return QString::number(i.value()[1]);
+                    }
+                }
                 return i.key() + " size " + size + " procent " + procent;
             }else if (i.value().count() == 1){
                 QString size = QString::number(i.value()[0],'g', 20);
@@ -62,8 +68,27 @@ QVariant CalculateSize_TableModel::headerData(int section, Qt::Orientation orien
 
 void CalculateSize_TableModel::append(QString path){
     beginInsertRows(QModelIndex(), map.count(), map.count());
-    Context *conext = new Context;
-    QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize(path));
-    map = folder_size;
+
+    changeStrat(strat, path);
+
     endInsertRows();
 }
+
+void CalculateSize_TableModel::changeStrat(Strategies strategy, QString path){
+
+    Context *conext = new Context;
+
+    beginInsertRows(QModelIndex(), map.count(), map.count());
+    switch (strategy) {
+        case Folder_CalculateSize:
+            strat = Strategies::Folder_CalculateSize;
+            map = conext->dirSize(new class Folder_CalculateSize(path));
+            break;
+        case Type_CalculateSize:
+            strat = Strategies::Type_CalculateSize;
+            map = conext->dirSize(new class Type_CalculateSize(path));
+            break;
+    }
+    endInsertRows();
+}
+
