@@ -37,6 +37,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     .gitignore \
-    CalculateTableView.qml \
     MyLab3_1.pro.user \
     README.md

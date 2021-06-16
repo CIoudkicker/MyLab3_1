@@ -30,25 +30,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_listView_doubleClicked(const QModelIndex &index);
 
     void on_treeView_activated(const QModelIndex &index);
 
-    void on_treeView_expanded(const QModelIndex &index);
-
-    void on_radioButton_clicked();
-
-    void on_radioButton_clicked(bool checked);
-
-    void on_radioButton_pressed();
-
     void on_radioButton_toggled(bool checked);
 
-    void on_radioButton_released();
-
     void on_radioButton_2_toggled(bool checked);
-
-    void on_radioButton_3_toggled(bool checked);
 
     void on_treeView_doubleClicked(const QModelIndex &index);
 

@@ -67,18 +67,18 @@ QVariant CalculateSize_TableModel::headerData(int section, Qt::Orientation orien
 }
 
 void CalculateSize_TableModel::append(QString path){
-    beginInsertRows(QModelIndex(), map.count(), map.count());
+    beginResetModel();
 
     changeStrat(strat, path);
 
-    endInsertRows();
+    endResetModel();
 }
 
 void CalculateSize_TableModel::changeStrat(Strategies strategy, QString path){
 
     Context *conext = new Context;
 
-    beginInsertRows(QModelIndex(), map.count(), map.count());
+    beginResetModel();
     switch (strategy) {
         case Folder_CalculateSize:
             strat = Strategies::Folder_CalculateSize;
@@ -89,6 +89,6 @@ void CalculateSize_TableModel::changeStrat(Strategies strategy, QString path){
             map = conext->dirSize(new class Type_CalculateSize(path));
             break;
     }
-    endInsertRows();
+    endResetModel();
 }
 
