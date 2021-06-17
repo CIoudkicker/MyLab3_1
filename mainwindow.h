@@ -3,7 +3,6 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QFileSystemModel>
-#include "CalculateSizeModel.h"
 #include "CalculateSize_TableModel.h"
 #include <QDir>
 #include <QString>
@@ -37,13 +36,11 @@ private slots:
 
     void on_radioButton_2_toggled(bool checked);
 
-    void on_treeView_doubleClicked(const QModelIndex &index);
-
 private:
     Ui::MainWindow *ui;
     QModelIndex Currentindex;
     QFileSystemModel *leftDirFileSys;
-    CalculateSizeModel *CalcSizeModel;
+
     CalculateSize_TableModel *CalcTableModel;
     QGroupBox *groupbox();
 

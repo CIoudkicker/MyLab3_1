@@ -9,7 +9,6 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    CalculateSizeModel.cpp \
     CalculateSize_TableModel.cpp \
     Context.cpp \
     Folder_CalculateSize.cpp \
@@ -19,7 +18,6 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    CalculateSizeModel.h \
     CalculateSize_TableModel.h \
     Context.h \
     Folder_CalculateSize.h \

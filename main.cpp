@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
     printMap(type_size);
     qDebug()<< "";
 
+    delete conext;
+
 
     QApplication a(argc, argv);
     MainWindow w;
