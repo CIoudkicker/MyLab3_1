@@ -52,7 +52,7 @@ void MainWindow::on_treeView_activated(const QModelIndex &index){
 void MainWindow::on_radioButton_toggled(bool checked)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
-    CalcTableModel->changeStrat(CalculateSize_TableModel::Strategies::Folder_CalculateSize, fileInfo.absoluteFilePath());
+    CalcTableModel->changeStrat(Context::Strategies::Folder_CalculateSize, fileInfo.absoluteFilePath());
     qDebug() << "radio 1.1";
 }
 
@@ -60,7 +60,7 @@ void MainWindow::on_radioButton_toggled(bool checked)
 void MainWindow::on_radioButton_2_toggled(bool checked)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
-    CalcTableModel->changeStrat(CalculateSize_TableModel::Strategies::Type_CalculateSize, fileInfo.absoluteFilePath());
+    CalcTableModel->changeStrat(Context::Strategies::Type_CalculateSize, fileInfo.absoluteFilePath());
     qDebug() << "radio 1.2";
 }
 

@@ -4,6 +4,11 @@ CalculateSize_TableModel::CalculateSize_TableModel(QObject *parent):
     QAbstractTableModel(parent)
 {
     map = QMap<QString, QList<float>>();
+    context = new Context;
+}
+
+CalculateSize_TableModel::~CalculateSize_TableModel(){
+    delete context;
 }
 
 
@@ -69,26 +74,19 @@ QVariant CalculateSize_TableModel::headerData(int section, Qt::Orientation orien
 void CalculateSize_TableModel::append(QString path){
     beginResetModel();
 
-    changeStrat(strat, path);
+    context->changeStrat(context->getStrat(), path);
+    map = context->getMap();
 
     endResetModel();
 }
 
-void CalculateSize_TableModel::changeStrat(Strategies strategy, QString path){
-
-    Context *conext = new Context;
+void CalculateSize_TableModel::changeStrat(Context::Strategies strat, QString path){
 
     beginResetModel();
-    switch (strategy) {
-        case Folder_CalculateSize:
-            strat = Strategies::Folder_CalculateSize;
-            map = conext->dirSize(new class Folder_CalculateSize(path));
-            break;
-        case Type_CalculateSize:
-            strat = Strategies::Type_CalculateSize;
-            map = conext->dirSize(new class Type_CalculateSize(path));
-            break;
-    }
+
+    context->changeStrat(strat, path);
+    map = context->getMap();
+
     endResetModel();
 }
 

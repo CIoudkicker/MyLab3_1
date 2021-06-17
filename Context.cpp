@@ -7,3 +7,23 @@ QMap<QString, QList<float>> Context::dirSize(ICalculateSize *calc){
     }
     return map;
 }
+
+void Context::changeStrat(Strategies strategy, QString path){
+
+
+    switch (strategy) {
+        case Folder_CalculateSize:
+            strat = Strategies::Folder_CalculateSize;
+            map = dirSize(new class Folder_CalculateSize(path));
+            break;
+        case Type_CalculateSize:
+            strat = Strategies::Type_CalculateSize;
+            map = dirSize(new class Type_CalculateSize(path));
+            break;
+    }
+}
+
+
+
+
+
