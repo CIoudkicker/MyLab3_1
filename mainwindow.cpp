@@ -23,9 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeView_2->setModel(CalcTableModel);
 
 
-
     connect(ui->treeView, SIGNAL(doubleClicked(QModeIndex)), this, SLOT(on_listView_doubleClicked(const QModelIndex &index)));
 
+
+    setCentralWidget(centralWidget());
 }
 
 MainWindow::~MainWindow()
