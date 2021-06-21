@@ -21,7 +21,7 @@ class ICalculateSize{
     public:
 
         ICalculateSize(QString path1): path(path1){}
-        ~ICalculateSize(){}
+        virtual ~ICalculateSize(){}
 
         virtual QMap<QString, QList<float>> dirSize() = 0;
         static float trim(float in); // округляет число
