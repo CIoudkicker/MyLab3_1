@@ -23,8 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->radioButton->setChecked(true);
 
+    diagram = new diagramwidgets();
+
+    QChart *chartBar =  diagram->createBarChart(10);
+
+    ui->chartView->setChart(chartBar);
+
 
     setCentralWidget(centralWidget());
+
 }
 
 MainWindow::~MainWindow()

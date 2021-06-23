@@ -9,16 +9,19 @@
 #include <QList>
 #include <QTreeView>
 #include <QListView>
+#include <QtCharts/QChartView>
 #include <QItemSelectionModel>
 #include <QStandardItem>
 #include <QGroupBox>
 #include <QModelIndex>
 #include <QDebug>
-
+#include "diagramwidgets.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+using namespace QtCharts;
 
 class MainWindow : public QMainWindow
 {
@@ -40,7 +43,7 @@ private:
     Ui::MainWindow *ui;
     QModelIndex Currentindex;
     QFileSystemModel *leftDirFileSys;
-
+    diagramwidgets *diagram;
     CalculateSize_TableModel *CalcTableModel;
     QGroupBox *groupbox();
 
