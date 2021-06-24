@@ -21,14 +21,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->treeView_2->setModel(CalcTableModel);
 
-    ui->radioButton->setChecked(true);
-
     diagram = new diagramwidgets();
 
-    QChart *chartBar =  diagram->createBarChart(10);
+    diagram->generateData(CalcTableModel->getMap());
 
-    ui->chartView->setChart(chartBar);
 
+    //ui->chartView->setChart(diagram->createBarChart(10));
+
+    ui->radioButton->setChecked(true);
 
     setCentralWidget(centralWidget());
 
@@ -49,6 +49,8 @@ void MainWindow::on_treeView_activated(const QModelIndex &index){
 
     if(index.isValid()){
         CalcTableModel->append(fileInfo.absoluteFilePath());
+        diagram->generateData(CalcTableModel->getMap());
+        //ui->chartView->setChart(diagram->createBarChart(10));
     }
 
     qDebug() << "OPPA on_treeView_activated"<< fileInfo.absoluteFilePath();
@@ -59,6 +61,10 @@ void MainWindow::on_radioButton_toggled(bool checked)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     CalcTableModel->changeStrat(Context::Strategies::Folder_CalculateSize, fileInfo.absoluteFilePath());
+    diagram->generateData(CalcTableModel->getMap());
+    //ui->chartView->setChart(diagram->createBarChart(10));
+
+
     qDebug() << "radio 1.1";
 }
 
@@ -67,6 +73,8 @@ void MainWindow::on_radioButton_2_toggled(bool checked)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     CalcTableModel->changeStrat(Context::Strategies::Type_CalculateSize, fileInfo.absoluteFilePath());
+    diagram->generateData(CalcTableModel->getMap());
+    //ui->chartView->setChart(diagram->createBarChart(10));
     qDebug() << "radio 1.2";
 }
 

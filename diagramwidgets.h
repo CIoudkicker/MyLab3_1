@@ -37,6 +37,11 @@
 #include <QtWidgets/QLabel>
 #include <QtCore/QTime>
 #include <QtCharts/QBarCategoryAxis>
+#include <QMap>
+#include <QList>
+#include <QString>
+
+#include "CalculateSize_TableModel.h"
 
 
 using namespace QtCharts;
@@ -45,6 +50,7 @@ typedef QPair<QPointF, QString> Data;
 typedef QList<Data> DataList;
 typedef QList<DataList> DataTable;
 
+
 class diagramwidgets{
 
     public:
@@ -52,18 +58,26 @@ class diagramwidgets{
         diagramwidgets();
 
         QChart *createBarChart(int valueCount) const;
-        DataTable generateRandomData(int listCount, int valueMax, int valueCount) const;
+        QChart *createPieChart();
+        DataTable generateData(QMap<QString, QList<float>> map);
 
         int m_listCount;
         int m_valueMax;
         int m_valueCount;
 
+        DataTable da;
         QList<QChartView *> m_charts;
-        DataTable m_dataTable;
+        DataTable m_dataTable = da;
         QComboBox *m_themeComboBox;
         QCheckBox *m_antialiasCheckBox;
         QComboBox *m_animatedComboBox;
         QComboBox *m_legendComboBox;
+
+
+
+    private:
+
+        QMap<QString, QList<float>> map;
 
 
 };

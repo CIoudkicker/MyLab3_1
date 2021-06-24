@@ -20,6 +20,8 @@ class CalculateSize_TableModel : public QAbstractTableModel{
         QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
         void append(QString path);
         void changeStrat(Context::Strategies strat, QString path);
+        Context* getContext(){return context;}
+        QMap<QString, QList<float>> getMap(){return map;}
 
     private:
 
