@@ -7,6 +7,23 @@ CalculateSize_TableModel::CalculateSize_TableModel(QObject *parent):
     context = new Context_CalculateSize;
 }
 
+void CalculateSize_TableModel::Attach(IObserver *observer){
+  list_observer_.push_back(observer);
+}
+
+void CalculateSize_TableModel::Detach(IObserver *observer){
+  list_observer_.remove(observer);
+}
+
+void CalculateSize_TableModel::Notify(){
+  std::list<IObserver *>::iterator iterator = list_observer_.begin();
+
+  while (iterator != list_observer_.end()) {
+    (*iterator)->Update(map);
+    ++iterator;
+  }
+}
+
 CalculateSize_TableModel::~CalculateSize_TableModel(){
     delete context;
 }

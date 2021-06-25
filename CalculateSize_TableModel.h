@@ -3,9 +3,9 @@
 
 #include <QAbstractTableModel>
 #include "Context_CalculateSize.h"
-#include "IObserver.h"
+#include "ISubject.h"
 
-class CalculateSize_TableModel : public QAbstractTableModel{
+class CalculateSize_TableModel : public QAbstractTableModel, public ISubject{
 
     Q_OBJECT
 
@@ -13,6 +13,10 @@ class CalculateSize_TableModel : public QAbstractTableModel{
 
         CalculateSize_TableModel(QObject *parent);
         ~CalculateSize_TableModel();
+
+        void Attach(IObserver *observer) override;
+        void Detach(IObserver *observer) override;
+        void Notify() override;
 
         int rowCount(const QModelIndex &index = QModelIndex())const override;
         int columnCount(const QModelIndex &index = QModelIndex())const override;
@@ -27,6 +31,7 @@ class CalculateSize_TableModel : public QAbstractTableModel{
 
         QMap<QString, QList<float>> map;
         Context_CalculateSize *context;
+        std::list<IObserver *> list_observer_;
 
 };
 

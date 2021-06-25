@@ -79,7 +79,7 @@ class diagramwidgets : public IObserver{
         DataTable m_dataTable;
 
 
-        virtual void Update(QMap<QString, QList<float>> map){int z = 1;}
+        virtual void Update(QMap<QString, QList<float>> map);
 
     private:
 

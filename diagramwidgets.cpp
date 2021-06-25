@@ -15,6 +15,9 @@ diagramwidgets::~diagramwidgets(){
     delete chartView;
 }
 
+void diagramwidgets::Update(QMap<QString, QList<float>> map){
+    generateData(map);
+}
 
 QChart *diagramwidgets::createBarChart()
 {
