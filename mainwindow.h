@@ -16,6 +16,7 @@
 #include <QModelIndex>
 #include <QDebug>
 #include "diagramwidgets.h"
+#include "ISubject.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,13 +24,17 @@ QT_END_NAMESPACE
 
 using namespace QtCharts;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public ISubject
 {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void Attach(IObserver *observer) override;
+    void Detach(IObserver *observer) override;
+    void Notify() override;
 
 private slots:
 
@@ -39,6 +44,10 @@ private slots:
 
     void on_radioButton_2_toggled(bool checked);
 
+    void on_radioButton_3_toggled(bool checked);
+
+    void on_radioButton_4_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QModelIndex Currentindex;
@@ -46,6 +55,7 @@ private:
     diagramwidgets *diagram;
     CalculateSize_TableModel *CalcTableModel;
     QGroupBox *groupbox();
+    std::list<IObserver *> list_observer_;
 
 };
 #endif // MAINWINDOW_H

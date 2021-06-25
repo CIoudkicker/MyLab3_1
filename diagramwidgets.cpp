@@ -4,14 +4,13 @@ diagramwidgets::diagramwidgets():
     m_dataTable(DataTable())
 {
     QChartView *chartView;
-    chartView = new QChartView(createBarChart(m_valueCount));
+    chartView = new QChartView(createBarChart());
     m_charts << chartView;
 
 }
 
-QChart *diagramwidgets::createBarChart(int valueCount) const
+QChart *diagramwidgets::createBarChart()
 {
-    Q_UNUSED(valueCount);
     QChart *chart = new QChart();
     chart->setTitle("Bar chart");
 
@@ -42,6 +41,7 @@ QChart *diagramwidgets::createBarChart(int valueCount) const
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
 
+    qChart = chart;
     return chart;
 }
 
@@ -50,27 +50,21 @@ QChart* diagramwidgets::createPieChart()
     QChart *chart = new QChart();
     chart->setTitle("Pie chart");
 
-    qreal pieSize = 0.7 / m_dataTable.count();
+    qreal pieSize = 0.5 / m_dataTable.count();
     for (int i = 0; i < m_dataTable.count(); i++) {
         QPieSeries *series = new QPieSeries(chart);
-        for (const Data &data : m_dataTable[i]) {
-            QPieSlice *slice = series->append(data.second, /*data.first.y()*/ 43);
+        for (int j = 0; j < m_dataTable[i].size()-1; j++) {
+            QPieSlice *slice = series->append(m_dataTable[i][j].second, m_dataTable[i][j].first.y());
             slice->setLabelVisible();
             slice->setExploded();
-            /*
-            if (data == m_dataTable[i].first()) {
-                slice->setLabelVisible();
-                slice->setExploded();
-            }*/
         }
-        qreal hPos = (pieSize / 2) + (i / (qreal) m_dataTable.count());
+        qreal hPos = (pieSize / 0.98) + (i / (qreal) m_dataTable.count());
         series->setPieSize(pieSize);
         series->setHorizontalPosition(hPos);
         series->setVerticalPosition(0.5);
-
         chart->addSeries(series);
     }
-
+    qChart = chart;
     return chart;
 }
 
@@ -88,11 +82,11 @@ DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)
             QList<float> val = i.value();
             yValue = val[1];
             QPointF value_1(1, yValue);
-            QString label = "Slice " + QString::number(0) + ":" + QString::number(count);
+            QString label = QString(i.key());
             dataList << Data(value_1, label);
             i++;
         }
-        QString label = "Slice " + QString::number(0) + ":" + QString::number(count+1);
+        QString label = QString(i.key());
         QPointF value_1(1, 100);
         dataList << Data(value_1, label);
         dataTable << dataList;

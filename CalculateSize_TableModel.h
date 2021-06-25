@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 #include "Context.h"
-
+#include "IObserver.h"
 
 class CalculateSize_TableModel : public QAbstractTableModel{
 

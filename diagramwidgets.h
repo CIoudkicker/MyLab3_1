@@ -40,7 +40,7 @@
 #include <QMap>
 #include <QList>
 #include <QString>
-
+#include "IObserver.h"
 #include "CalculateSize_TableModel.h"
 
 
@@ -51,13 +51,13 @@ typedef QList<Data> DataList;
 typedef QList<DataList> DataTable;
 
 
-class diagramwidgets{
+class diagramwidgets : public IObserver{
 
     public:
 
         diagramwidgets();
 
-        QChart *createBarChart(int valueCount) const;
+        QChart *createBarChart();
         QChart *createPieChart();
         DataTable generateData(QMap<QString, QList<float>> map);
 
@@ -67,18 +67,18 @@ class diagramwidgets{
 
         DataTable da;
         QList<QChartView *> m_charts;
+        QChart *qChart;
         DataTable m_dataTable = da;
         QComboBox *m_themeComboBox;
         QCheckBox *m_antialiasCheckBox;
         QComboBox *m_animatedComboBox;
         QComboBox *m_legendComboBox;
 
-
+        virtual void Update(QMap<QString, QList<float>> map){int z = 1;}
 
     private:
 
         QMap<QString, QList<float>> map;
-
 
 };
 
