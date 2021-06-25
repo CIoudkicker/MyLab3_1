@@ -16,7 +16,7 @@
 #include <QModelIndex>
 #include <QDebug>
 #include "diagramwidgets.h"
-#include "ISubject.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

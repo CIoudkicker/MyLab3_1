@@ -172,14 +172,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QChartView" name="chartView">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="interactive">
-        <bool>true</bool>
-       </property>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -240,13 +232,6 @@
    </attribute>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QChartView</class>
-   <extends>QGraphicsView</extends>
-   <header>qchartview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

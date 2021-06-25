@@ -26,7 +26,6 @@ SOURCES += \
     Folder_CalculateSize.cpp \
     ICalculateSize.cpp \
     IObserver.cpp \
-    ISubject.cpp \
     Type_CalculateSize.cpp \
     diagramwidgets.cpp \
     main.cpp \
@@ -39,7 +38,6 @@ HEADERS += \
     Folder_CalculateSize.h \
     ICalculateSize.h \
     IObserver.h \
-    ISubject.h \
     Type_CalculateSize.h \
     diagramwidgets.h \
     mainwindow.h

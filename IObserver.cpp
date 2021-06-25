@@ -4,3 +4,10 @@ IObserver::IObserver()
 {
 
 }
+
+
+ISubject::ISubject()
+{
+
+}
+

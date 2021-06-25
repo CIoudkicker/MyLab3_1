@@ -60,7 +60,7 @@ class diagramwidgets : public IObserver{
             PieChart
         };
 
-        diagramwidgets();
+        diagramwidgets(CalculateSize_TableModel &subject);
         ~diagramwidgets();
 
         QChart *createBarChart();
@@ -83,8 +83,11 @@ class diagramwidgets : public IObserver{
 
     private:
 
+        CalculateSize_TableModel &subject_;
         CurrentDiagram currentDiagram;
         QMap<QString, QList<float>> map;
+        static int static_number_;
+        int number_;
 
 };
 

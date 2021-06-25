@@ -1,8 +1,11 @@
 #include "diagramwidgets.h"
 
-diagramwidgets::diagramwidgets():
-    m_dataTable(DataTable())
+diagramwidgets::diagramwidgets(CalculateSize_TableModel &subject):
+    m_dataTable(DataTable()), subject_(subject)
 {
+    this->subject_.Attach(this);
+    //std::cout << "Hi, I'm the Observer \"" << ++diagramwidgets::static_number_ << "\".\n";
+    //this->number_ = diagramwidgets::static_number_;
 
     QChartView *chartView;
     chartView = new QChartView();
@@ -17,7 +20,10 @@ diagramwidgets::~diagramwidgets(){
 
 void diagramwidgets::Update(QMap<QString, QList<float>> map){
     generateData(map);
+    executeCurrentDiagram();
 }
+
+
 
 QChart *diagramwidgets::createBarChart()
 {

@@ -17,7 +17,6 @@ void CalculateSize_TableModel::Detach(IObserver *observer){
 
 void CalculateSize_TableModel::Notify(){
   std::list<IObserver *>::iterator iterator = list_observer_.begin();
-
   while (iterator != list_observer_.end()) {
     (*iterator)->Update(map);
     ++iterator;
