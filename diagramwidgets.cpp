@@ -3,11 +3,18 @@
 diagramwidgets::diagramwidgets():
     m_dataTable(DataTable())
 {
+
     QChartView *chartView;
-    chartView = new QChartView(createBarChart());
+    chartView = new QChartView();
     m_charts << chartView;
+    this->chartView = chartView;
 
 }
+
+diagramwidgets::~diagramwidgets(){
+    delete chartView;
+}
+
 
 QChart *diagramwidgets::createBarChart()
 {
@@ -27,6 +34,7 @@ QChart *diagramwidgets::createBarChart()
     QStringList categories;
     QMap<QString, QList<float>>::const_iterator i = map.begin();
     i++;
+
     if(i != map.end()+1){
         while (i != map.end()) {
             QList<float> val;
@@ -41,7 +49,11 @@ QChart *diagramwidgets::createBarChart()
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
 
+    this->chartView->setChart(chart);
+    chartView->update();
     qChart = chart;
+
+    currentDiagram = CurrentDiagram::BarChart;
     return chart;
 }
 
@@ -65,7 +77,25 @@ QChart* diagramwidgets::createPieChart()
         chart->addSeries(series);
     }
     qChart = chart;
+    this->chartView->setChart(chart);
+    chartView->update();
+
+    currentDiagram = CurrentDiagram::PieChart;
+
     return chart;
+}
+
+QChart* diagramwidgets::executeCurrentDiagram(){
+    switch (currentDiagram) {
+
+        case BarChart:
+            createBarChart();
+            break;
+
+        case PieChart:
+            createPieChart();
+            break;
+    }
 }
 
 DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)

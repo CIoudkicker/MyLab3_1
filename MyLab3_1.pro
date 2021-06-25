@@ -21,7 +21,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     CalculateSize_TableModel.cpp \
-    Context.cpp \
+    Context_CalculateSize.cpp \
+    Context_Diagrams.cpp \
     Folder_CalculateSize.cpp \
     ICalculateSize.cpp \
     IObserver.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
 
 HEADERS += \
     CalculateSize_TableModel.h \
-    Context.h \
+    Context_CalculateSize.h \
+    Context_Diagrams.h \
     Folder_CalculateSize.h \
     ICalculateSize.h \
     IObserver.h \

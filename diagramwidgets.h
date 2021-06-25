@@ -55,29 +55,35 @@ class diagramwidgets : public IObserver{
 
     public:
 
+        enum CurrentDiagram{
+            BarChart = 1,
+            PieChart
+        };
+
         diagramwidgets();
+        ~diagramwidgets();
 
         QChart *createBarChart();
         QChart *createPieChart();
+        QChart *executeCurrentDiagram();
         DataTable generateData(QMap<QString, QList<float>> map);
+        QChart *getQChartView();
 
         int m_listCount;
         int m_valueMax;
         int m_valueCount;
 
-        DataTable da;
         QList<QChartView *> m_charts;
+        QChartView *chartView;
         QChart *qChart;
-        DataTable m_dataTable = da;
-        QComboBox *m_themeComboBox;
-        QCheckBox *m_antialiasCheckBox;
-        QComboBox *m_animatedComboBox;
-        QComboBox *m_legendComboBox;
+        DataTable m_dataTable;
+
 
         virtual void Update(QMap<QString, QList<float>> map){int z = 1;}
 
     private:
 
+        CurrentDiagram currentDiagram;
         QMap<QString, QList<float>> map;
 
 };

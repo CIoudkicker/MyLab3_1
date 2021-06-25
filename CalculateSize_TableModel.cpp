@@ -4,7 +4,7 @@ CalculateSize_TableModel::CalculateSize_TableModel(QObject *parent):
     QAbstractTableModel(parent)
 {
     map = QMap<QString, QList<float>>();
-    context = new Context;
+    context = new Context_CalculateSize;
 }
 
 CalculateSize_TableModel::~CalculateSize_TableModel(){
@@ -80,7 +80,7 @@ void CalculateSize_TableModel::append(QString path){
     endResetModel();
 }
 
-void CalculateSize_TableModel::changeStrat(Context::Strategies strat, QString path){
+void CalculateSize_TableModel::changeStrat(Context_CalculateSize::Strategies strat, QString path){
 
     beginResetModel();
 

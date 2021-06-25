@@ -2,7 +2,7 @@
 #define CALCULATESIZE_TABLEMODEL_H
 
 #include <QAbstractTableModel>
-#include "Context.h"
+#include "Context_CalculateSize.h"
 #include "IObserver.h"
 
 class CalculateSize_TableModel : public QAbstractTableModel{
@@ -19,14 +19,14 @@ class CalculateSize_TableModel : public QAbstractTableModel{
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
         void append(QString path);
-        void changeStrat(Context::Strategies strat, QString path);
-        Context* getContext(){return context;}
+        void changeStrat(Context_CalculateSize::Strategies strat, QString path);
+        Context_CalculateSize* getContext(){return context;}
         QMap<QString, QList<float>> getMap(){return map;}
 
     private:
 
         QMap<QString, QList<float>> map;
-        Context *context;
+        Context_CalculateSize *context;
 
 };
 

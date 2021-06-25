@@ -16,7 +16,7 @@
 #include"ICalculateSize.h"
 #include"Folder_CalculateSize.h"
 #include"Type_CalculateSize.h"
-#include"Context.h"
+#include"Context_CalculateSize.h"
 
 using namespace std;
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
 
 
-    Context *conext = new Context();
+    Context_CalculateSize *conext = new Context_CalculateSize();
 
     QMap<QString, QList<float>> folder_size = conext->dirSize(new Folder_CalculateSize("E:/Загрузки/test/test"));
     QMap<QString, QList<float>> type_size = conext->dirSize(new Type_CalculateSize("E:/Загрузки/test/test/1"));

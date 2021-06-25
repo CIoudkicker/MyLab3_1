@@ -24,17 +24,13 @@ QT_END_NAMESPACE
 
 using namespace QtCharts;
 
-class MainWindow : public QMainWindow, public ISubject
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-    void Attach(IObserver *observer) override;
-    void Detach(IObserver *observer) override;
-    void Notify() override;
 
 private slots:
 
@@ -55,7 +51,6 @@ private:
     diagramwidgets *diagram;
     CalculateSize_TableModel *CalcTableModel;
     QGroupBox *groupbox();
-    std::list<IObserver *> list_observer_;
 
 };
 #endif // MAINWINDOW_H
