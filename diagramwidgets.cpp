@@ -21,26 +21,42 @@ void diagramwidgets::Update(QMap<QString, QList<float>> map){
     executeCurrentDiagram();
 }
 
-
-
 QChart *diagramwidgets::createBarChart()
 {
-    qChart->removeAllSeries();
 
+    float count = -1;
+    QList<float> val;
+    QString name;
+    qreal yValue(0);
+
+    qChart->removeAllSeries();
     qChart->setTitle("Bar chart");
 
     QStringList categories;
     QStackedBarSeries *series = new QStackedBarSeries(qChart);
-    for (int i(0); i < m_dataTable.count(); i++) {
-        QBarSet *set = new QBarSet("Bar set " + QString::number(i));
-        for (int j = 0; j < m_dataTable[i].size()-1; j++) {
-            *set << m_dataTable[i][j].first.y();
-            categories << categories << QString(m_dataTable[i][j].second);
+
+
+
+
+    QMap<QString, QList<float>>::const_iterator i = map.begin();
+    i++;
+    if(i != map.end()+1){
+        QBarSet *set = new QBarSet("Bar set " + QString::number(11));
+        while (i != map.end()) {
+            count += 1;
+            val = i.value();
+            name = QString(i.key());
+            yValue = val[1];
+            *set << yValue;
+            categories << categories << name;
+            i++;
         }
-        *set << m_dataTable[i][m_dataTable[i].size()-1].first.y();
+        *set << (qreal)100;
         //series->clear();
         series->append(set);
     }
+
+
     qChart->addSeries(series);
 
 
@@ -55,20 +71,34 @@ QChart *diagramwidgets::createBarChart()
     return qChart;
 }
 
+
 QChart* diagramwidgets::createPieChart()
 {
+    float count = -1;
+    QList<float> val;
+    QString name;
+    qreal yValue(0);
+
     qChart->removeAllSeries();
     qChart->setTitle("Pie chart");
 
-    qreal pieSize = 0.5 / m_dataTable.count();
-    for (int i = 0; i < m_dataTable.count(); i++) {
+    QMap<QString, QList<float>>::const_iterator i = map.begin();
+    i++;
+    if(i != map.end()+1){
         QPieSeries *series = new QPieSeries(qChart);
-        for (int j = 0; j < m_dataTable[i].size()-1; j++) {
-            QPieSlice *slice = series->append(m_dataTable[i][j].second, m_dataTable[i][j].first.y());
+
+        while (i != map.end()) {
+            count += 1;
+            val = i.value();
+            name = QString(i.key());
+            yValue = val[1];
+            QPieSlice *slice = series->append(name, yValue);
             slice->setLabelVisible();
             slice->setExploded();
+            i++;
         }
-        qreal hPos = (pieSize / 0.98) + (i / (qreal) m_dataTable.count());
+        qreal pieSize = 0.5;
+        qreal hPos = (pieSize / 0.98) + (0.1 / (qreal)2);
         series->setPieSize(pieSize);
         series->setHorizontalPosition(hPos);
         series->setVerticalPosition(0.5);
