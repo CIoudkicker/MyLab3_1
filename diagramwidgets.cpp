@@ -4,13 +4,11 @@ diagramwidgets::diagramwidgets(CalculateSize_TableModel &subject):
     m_dataTable(DataTable()), subject_(subject)
 {
     this->subject_.Attach(this);
-    //std::cout << "Hi, I'm the Observer \"" << ++diagramwidgets::static_number_ << "\".\n";
-    //this->number_ = diagramwidgets::static_number_;
+    this->qChart = new QChart();;
 
-    QChartView *chartView;
-    chartView = new QChartView();
-    m_charts << chartView;
-    this->chartView = chartView;
+    this->chartView = new QChartView();
+
+    this->chartView->setChart(qChart);
 
 }
 
@@ -27,53 +25,44 @@ void diagramwidgets::Update(QMap<QString, QList<float>> map){
 
 QChart *diagramwidgets::createBarChart()
 {
-    QChart *chart = new QChart();
-    chart->setTitle("Bar chart");
+    qChart->removeAllSeries();
 
-    QStackedBarSeries *series = new QStackedBarSeries(chart);
+    qChart->setTitle("Bar chart");
+
+    QStringList categories;
+    QStackedBarSeries *series = new QStackedBarSeries(qChart);
     for (int i(0); i < m_dataTable.count(); i++) {
         QBarSet *set = new QBarSet("Bar set " + QString::number(i));
-        for (const Data &data : m_dataTable[i]){
-            *set << data.first.y();
+        for (int j = 0; j < m_dataTable[i].size()-1; j++) {
+            *set << m_dataTable[i][j].first.y();
+            categories << categories << QString(m_dataTable[i][j].second);
         }
+        *set << m_dataTable[i][m_dataTable[i].size()-1].first.y();
         //series->clear();
         series->append(set);
     }
-    chart->addSeries(series);
-    QStringList categories;
-    QMap<QString, QList<float>>::const_iterator i = map.begin();
-    i++;
+    qChart->addSeries(series);
 
-    if(i != map.end()+1){
-        while (i != map.end()) {
-            QList<float> val;
-            val = i.value();
-            categories << categories << QString(i.key());
-            i++;
-        }
-    }
 
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
-    chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
+    qChart->createDefaultAxes();
+    qChart->setAxisX(axis, series);
 
-    this->chartView->setChart(chart);
     chartView->update();
-    qChart = chart;
 
     currentDiagram = CurrentDiagram::BarChart;
-    return chart;
+    return qChart;
 }
 
 QChart* diagramwidgets::createPieChart()
 {
-    QChart *chart = new QChart();
-    chart->setTitle("Pie chart");
+    qChart->removeAllSeries();
+    qChart->setTitle("Pie chart");
 
     qreal pieSize = 0.5 / m_dataTable.count();
     for (int i = 0; i < m_dataTable.count(); i++) {
-        QPieSeries *series = new QPieSeries(chart);
+        QPieSeries *series = new QPieSeries(qChart);
         for (int j = 0; j < m_dataTable[i].size()-1; j++) {
             QPieSlice *slice = series->append(m_dataTable[i][j].second, m_dataTable[i][j].first.y());
             slice->setLabelVisible();
@@ -83,17 +72,15 @@ QChart* diagramwidgets::createPieChart()
         series->setPieSize(pieSize);
         series->setHorizontalPosition(hPos);
         series->setVerticalPosition(0.5);
-        chart->addSeries(series);
+        qChart->addSeries(series);
     }
-    qChart = chart;
-    this->chartView->setChart(chart);
+
     chartView->update();
 
     currentDiagram = CurrentDiagram::PieChart;
 
-    return chart;
+    return qChart;
 }
-
 QChart* diagramwidgets::executeCurrentDiagram(){
     switch (currentDiagram) {
 
@@ -111,6 +98,10 @@ DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)
 {
     DataTable dataTable;
     float count = -1;
+    QList<float> val;
+    QString name;
+
+
     QMap<QString, QList<float>>::const_iterator i = map.begin();
     i++;
     if(i != map.end()+1){
@@ -118,7 +109,7 @@ DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)
         DataList dataList;
         while (i != map.end()) {
             count += 1;
-            QList<float> val = i.value();
+            val = i.value();
             yValue = val[1];
             QPointF value_1(1, yValue);
             QString label = QString(i.key());

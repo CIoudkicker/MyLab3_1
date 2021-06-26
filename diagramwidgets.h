@@ -77,6 +77,8 @@ class diagramwidgets : public IObserver{
         QChartView *chartView;
         QChart *qChart;
         DataTable m_dataTable;
+        Data m_data;
+        DataList m_datalist;
 
 
         virtual void Update(QMap<QString, QList<float>> map);
