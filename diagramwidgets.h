@@ -50,6 +50,135 @@ typedef QPair<QPointF, QString> Data;
 typedef QList<Data> DataList;
 typedef QList<DataList> DataTable;
 
+class diagramwidgets;
+
+class AbstractCreation{
+
+    public:
+
+        AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_) :
+            d(d_),
+            qchart(qchart_),
+            qcharview(qcharview_),
+            map(map_)
+        {};
+
+
+
+        float count = 1;
+        QList<float> val;
+        QString name;
+        qreal yValue = 0;
+        QChart *qchart;
+        QChartView *qcharview;
+        QMap<QString, QList<float>> map;
+        diagramwidgets *d;
+
+        void executeAll(){
+
+            this->removePlusTitle_Hook("");
+            qchart = this->MainAlgorithm();
+            this->chartViewUpdate();
+            this->setCurrentDiagram(d);
+
+        }
+
+        virtual void removePlusTitle_Hook(QString title){
+            qchart->removeAllSeries();
+            qchart->setTitle(title);
+        }
+
+        virtual QChart* MainAlgorithm() = 0;
+
+        virtual void chartViewUpdate(){
+            qcharview->update();
+        }
+
+        virtual void setCurrentDiagram(diagramwidgets *d) = 0;
+
+};
+
+class Bar : public AbstractCreation{
+
+    public:
+
+    Bar(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_):
+        AbstractCreation(d_, qchart_, qcharview_, map_)
+    {}
+
+    virtual QChart* MainAlgorithm() override{
+        QStringList categories;
+        QStackedBarSeries *series = new QStackedBarSeries(qchart);
+
+
+        QMap<QString, QList<float>>::const_iterator i = map.begin();
+        i++;
+        if(i != map.end()+1){
+            QBarSet *set = new QBarSet("Bar set " + QString::number(11));
+            while (i != map.end()) {
+                count += 1;
+                val = i.value();
+                name = QString(i.key());
+                yValue = val[1];
+                *set << yValue;
+                categories << categories << name;
+                i++;
+            }
+            *set << (qreal)100;
+            //series->clear();
+            series->append(set);
+        }
+
+
+        qchart->addSeries(series);
+
+        QBarCategoryAxis *axis = new QBarCategoryAxis();
+        axis->append(categories);
+        qchart->createDefaultAxes();
+        qchart->setAxisX(axis, series);
+    }
+
+    void setCurrentDiagram(diagramwidgets *d) override;
+
+};
+
+class Pie : public AbstractCreation{
+
+    public:
+
+    Pie(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_):
+        AbstractCreation(d_, qchart_, qcharview_, map_)
+    {}
+
+    virtual QChart* MainAlgorithm() override{
+        QMap<QString, QList<float>>::const_iterator i = map.begin();
+        i++;
+        if(i != map.end()+1){
+            QPieSeries *series = new QPieSeries(qchart);
+
+            while (i != map.end()) {
+                count += 1;
+                val = i.value();
+                name = QString(i.key());
+                yValue = val[1];
+                QPieSlice *slice = series->append(name, yValue);
+                slice->setLabelVisible();
+                slice->setExploded();
+                i++;
+            }
+            qreal pieSize = 0.5;
+            qreal hPos = (pieSize / 0.98) + (0.1 / (qreal)2);
+            series->setPieSize(pieSize);
+            series->setHorizontalPosition(hPos);
+            series->setVerticalPosition(0.5);
+            qchart->addSeries(series);
+        }
+    }
+
+    void setCurrentDiagram(diagramwidgets *d) override;
+
+};
+
 
 class diagramwidgets : public IObserver{
 
@@ -83,6 +212,8 @@ class diagramwidgets : public IObserver{
 
         virtual void Update(QMap<QString, QList<float>> map);
 
+
+
     private:
 
         CalculateSize_TableModel &subject_;
@@ -91,6 +222,12 @@ class diagramwidgets : public IObserver{
         static int static_number_;
         int number_;
 
+
+        friend void Bar::setCurrentDiagram(diagramwidgets *d);
+        friend void Pie::setCurrentDiagram(diagramwidgets *d);
+
 };
+
+
 
 #endif // DIAGRAMWIDGETS_H

@@ -29,45 +29,10 @@ QChart *diagramwidgets::createBarChart()
     QString name;
     qreal yValue(0);
 
-    qChart->removeAllSeries();
-    qChart->setTitle("Bar chart");
+    AbstractCreation *bar = new Bar(this,qChart,chartView,map);
 
-    QStringList categories;
-    QStackedBarSeries *series = new QStackedBarSeries(qChart);
+    bar->executeAll();
 
-
-
-
-    QMap<QString, QList<float>>::const_iterator i = map.begin();
-    i++;
-    if(i != map.end()+1){
-        QBarSet *set = new QBarSet("Bar set " + QString::number(11));
-        while (i != map.end()) {
-            count += 1;
-            val = i.value();
-            name = QString(i.key());
-            yValue = val[1];
-            *set << yValue;
-            categories << categories << name;
-            i++;
-        }
-        *set << (qreal)100;
-        //series->clear();
-        series->append(set);
-    }
-
-
-    qChart->addSeries(series);
-
-
-    QBarCategoryAxis *axis = new QBarCategoryAxis();
-    axis->append(categories);
-    qChart->createDefaultAxes();
-    qChart->setAxisX(axis, series);
-
-    chartView->update();
-
-    currentDiagram = CurrentDiagram::BarChart;
     return qChart;
 }
 
@@ -79,35 +44,9 @@ QChart* diagramwidgets::createPieChart()
     QString name;
     qreal yValue(0);
 
-    qChart->removeAllSeries();
-    qChart->setTitle("Pie chart");
+    AbstractCreation *pie = new Pie(this,qChart,chartView,map);
 
-    QMap<QString, QList<float>>::const_iterator i = map.begin();
-    i++;
-    if(i != map.end()+1){
-        QPieSeries *series = new QPieSeries(qChart);
-
-        while (i != map.end()) {
-            count += 1;
-            val = i.value();
-            name = QString(i.key());
-            yValue = val[1];
-            QPieSlice *slice = series->append(name, yValue);
-            slice->setLabelVisible();
-            slice->setExploded();
-            i++;
-        }
-        qreal pieSize = 0.5;
-        qreal hPos = (pieSize / 0.98) + (0.1 / (qreal)2);
-        series->setPieSize(pieSize);
-        series->setHorizontalPosition(hPos);
-        series->setVerticalPosition(0.5);
-        qChart->addSeries(series);
-    }
-
-    chartView->update();
-
-    currentDiagram = CurrentDiagram::PieChart;
+    pie->executeAll();
 
     return qChart;
 }
@@ -157,5 +96,11 @@ DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)
     return dataTable;
 }
 
+void Bar::setCurrentDiagram(diagramwidgets *d){
+     d->currentDiagram = diagramwidgets::CurrentDiagram::BarChart;
+}
 
+void Pie::setCurrentDiagram(diagramwidgets *d){
+     d->currentDiagram = diagramwidgets::CurrentDiagram::PieChart;
+}
 
