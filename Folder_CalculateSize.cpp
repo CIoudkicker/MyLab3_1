@@ -50,7 +50,7 @@ QMap<QString, QList<float>> Folder_CalculateSize::dirSize(const QString &path)
     QString folderName;
     QString fileName;
     int givenSize = 0;
-    int level = 0;
+    //int level = 0;
     float size = 0;
     QList<float> list;
     QMap<QString, QList<float>> map;

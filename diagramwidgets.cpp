@@ -4,7 +4,7 @@ diagramwidgets::diagramwidgets(CalculateSize_TableModel &subject):
     m_dataTable(DataTable()), subject_(subject)
 {
     this->subject_.Attach(this);
-    this->qChart = new QChart();;
+    this->qChart = new QChart();
 
     this->chartView = new QChartView();
 
@@ -24,30 +24,30 @@ void diagramwidgets::Update(QMap<QString, QList<float>> map){
 QChart *diagramwidgets::createBarChart()
 {
 
-    float count = -1;
+    //float count = -1;
     QList<float> val;
     QString name;
-    qreal yValue(0);
+    //qreal yValue(0);
 
     AbstractCreation *bar = new Bar(this,qChart,chartView,map);
 
     bar->executeAll();
-
+    delete bar;
     return qChart;
 }
 
 
 QChart* diagramwidgets::createPieChart()
 {
-    float count = -1;
+    //float count = -1;
     QList<float> val;
     QString name;
-    qreal yValue(0);
+    //qreal yValue(0);
 
     AbstractCreation *pie = new Pie(this,qChart,chartView,map);
 
     pie->executeAll();
-
+    delete pie;
     return qChart;
 }
 QChart* diagramwidgets::executeCurrentDiagram(){
@@ -61,6 +61,7 @@ QChart* diagramwidgets::executeCurrentDiagram(){
             createPieChart();
             break;
     }
+    return qChart;
 }
 
 DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)

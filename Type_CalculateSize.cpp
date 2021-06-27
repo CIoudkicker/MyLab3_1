@@ -24,7 +24,6 @@ QMap<QString, QList<float>> Type_CalculateSize::dirSize(const QString &path, int
     QList<float> val;
     QMap<QString, QList<float>> map = map1;
     int givenSize = 0;
-    int size = 0;
     //dir.entryInfoList(QDir::Files) returns file information
 
     qDebug().noquote().nospace() << space1.repeated(level-1)<< space2;
@@ -70,7 +69,6 @@ QMap<QString, QList<float>> Type_CalculateSize::dirSize(const QString &path)
     QString folderName;
     QString fileName;
     int givenSize = 0;
-    int level = 0;
     float size = 0;
     QList<float> val;
     QMap<QString, QList<float>> map;

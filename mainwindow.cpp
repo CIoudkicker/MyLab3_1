@@ -54,39 +54,38 @@ void MainWindow::on_treeView_activated(const QModelIndex &index){
     if(index.isValid()){
 
         CalcTableModel->append(fileInfo.absoluteFilePath());
-        CalcTableModel->Notify();
     }
 
     qDebug() << "OPPA on_treeView_activated"<< fileInfo.absoluteFilePath();
 }
 
 
-void MainWindow::on_radioButton_toggled(bool checked)
+void MainWindow::on_radioButton_toggled(bool /*checked*/)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     CalcTableModel->changeStrat(Context_CalculateSize::Strategies::Folder_CalculateSize, fileInfo.absoluteFilePath());
-    CalcTableModel->Notify();
+
     qDebug() << "radio 1.1";
 }
 
 
-void MainWindow::on_radioButton_2_toggled(bool checked)
+void MainWindow::on_radioButton_2_toggled(bool /*checked*/)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     CalcTableModel->changeStrat(Context_CalculateSize::Strategies::Type_CalculateSize, fileInfo.absoluteFilePath());
-    CalcTableModel->Notify();
+
     qDebug() << "radio 1.2";
 }
 
 
-void MainWindow::on_radioButton_3_toggled(bool checked){
+void MainWindow::on_radioButton_3_toggled(bool /*checked*/){
 
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     diagram->generateData(CalcTableModel->getMap());
     diagram->createBarChart();
 }
 
-void MainWindow::on_radioButton_4_toggled(bool checked){
+void MainWindow::on_radioButton_4_toggled(bool /*checked*/){
 
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     diagram->generateData(CalcTableModel->getMap());

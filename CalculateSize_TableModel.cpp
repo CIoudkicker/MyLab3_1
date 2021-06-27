@@ -92,7 +92,7 @@ void CalculateSize_TableModel::append(QString path){
 
     context->changeStrat(context->getStrat(), path);
     map = context->getMap();
-
+    Notify();
     endResetModel();
 }
 
@@ -102,7 +102,7 @@ void CalculateSize_TableModel::changeStrat(Context_CalculateSize::Strategies str
 
     context->changeStrat(strat, path);
     map = context->getMap();
-
+    Notify();
     endResetModel();
 }
 

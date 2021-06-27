@@ -57,13 +57,14 @@ class AbstractCreation{
     public:
 
         AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_) :
-            d(d_),
+
             qchart(qchart_),
             qcharview(qcharview_),
-            map(map_)
+            map(map_),
+            d(d_)
         {};
 
-
+        virtual ~AbstractCreation(){}
 
         float count = 1;
         QList<float> val;
@@ -136,6 +137,8 @@ class Bar : public AbstractCreation{
         axis->append(categories);
         qchart->createDefaultAxes();
         qchart->setAxisX(axis, series);
+
+        return qchart;
     }
 
     void setCurrentDiagram(diagramwidgets *d) override;
@@ -172,7 +175,10 @@ class Pie : public AbstractCreation{
             series->setHorizontalPosition(hPos);
             series->setVerticalPosition(0.5);
             qchart->addSeries(series);
+
+
         }
+        return qchart;
     }
 
     void setCurrentDiagram(diagramwidgets *d) override;
