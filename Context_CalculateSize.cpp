@@ -1,8 +1,8 @@
 #include "Context_CalculateSize.h"
 
-QMap<QString, QList<float>> Context_CalculateSize::dirSize(ICalculateSize *calc)
+DataForTable Context_CalculateSize::dirSize(ICalculateSize *calc)
 {
-    QMap<QString, QList<float>> map;
+    DataForTable map;
     if (calc != NULL) {
         map = calc->dirSize();
         delete calc;

@@ -1,7 +1,7 @@
 #include "diagramwidgets.h"
 
-diagramwidgets::diagramwidgets(CalculateSize_TableModel &subject):
-    m_dataTable(DataTable()), subject_(subject)
+diagramwidgets::diagramwidgets(CalculateSize_TableModel &subject)
+    : m_dataTable(DataTable()), subject_(subject)
 {
     this->subject_.Attach(this);
     this->qChart = new QChart();
@@ -9,14 +9,15 @@ diagramwidgets::diagramwidgets(CalculateSize_TableModel &subject):
     this->chartView = new QChartView();
 
     this->chartView->setChart(qChart);
-
 }
 
-diagramwidgets::~diagramwidgets(){
+diagramwidgets::~diagramwidgets()
+{
     delete chartView;
 }
 
-void diagramwidgets::Update(QMap<QString, QList<float>> map){
+void diagramwidgets::Update(DataForTable map)
+{
     generateData(map);
     executeCurrentDiagram();
 }
@@ -24,57 +25,56 @@ void diagramwidgets::Update(QMap<QString, QList<float>> map){
 QChart *diagramwidgets::createBarChart()
 {
 
-    //float count = -1;
+    // float count = -1;
     QList<float> val;
     QString name;
-    //qreal yValue(0);
+    // qreal yValue(0);
 
-    AbstractCreation *bar = new Bar(this,qChart,chartView,map);
+    AbstractCreation *bar = new Bar(this, qChart, chartView, map);
 
     bar->executeAll();
     delete bar;
     return qChart;
 }
 
-
-QChart* diagramwidgets::createPieChart()
+QChart *diagramwidgets::createPieChart()
 {
-    //float count = -1;
+    // float count = -1;
     QList<float> val;
     QString name;
-    //qreal yValue(0);
+    // qreal yValue(0);
 
-    AbstractCreation *pie = new Pie(this,qChart,chartView,map);
+    AbstractCreation *pie = new Pie(this, qChart, chartView, map);
 
     pie->executeAll();
     delete pie;
     return qChart;
 }
-QChart* diagramwidgets::executeCurrentDiagram(){
+QChart *diagramwidgets::executeCurrentDiagram()
+{
     switch (currentDiagram) {
 
-        case BarChart:
-            createBarChart();
-            break;
+    case BarChart:
+        createBarChart();
+        break;
 
-        case PieChart:
-            createPieChart();
-            break;
+    case PieChart:
+        createPieChart();
+        break;
     }
     return qChart;
 }
 
-DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)
+DataTable diagramwidgets::generateData(DataForTable map)
 {
     DataTable dataTable;
     float count = -1;
     QList<float> val;
     QString name;
 
-
-    QMap<QString, QList<float>>::const_iterator i = map.begin();
+    DataForTable::const_iterator i = map.begin();
     i++;
-    if(i != map.end()+1){
+    if (i != map.end() + 1) {
         qreal yValue(0);
         DataList dataList;
         while (i != map.end()) {
@@ -97,11 +97,12 @@ DataTable diagramwidgets::generateData(QMap<QString, QList<float>> map)
     return dataTable;
 }
 
-void Bar::setCurrentDiagram(diagramwidgets *d){
-     d->currentDiagram = diagramwidgets::CurrentDiagram::BarChart;
+void Bar::setCurrentDiagram(diagramwidgets *d)
+{
+    d->currentDiagram = diagramwidgets::CurrentDiagram::BarChart;
 }
 
-void Pie::setCurrentDiagram(diagramwidgets *d){
-     d->currentDiagram = diagramwidgets::CurrentDiagram::PieChart;
+void Pie::setCurrentDiagram(diagramwidgets *d)
+{
+    d->currentDiagram = diagramwidgets::CurrentDiagram::PieChart;
 }
-

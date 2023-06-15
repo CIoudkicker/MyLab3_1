@@ -2,12 +2,13 @@
 #define IOBSERVER_H
 
 #include <QString>
+#include "ICalculateSize.h"
 
 class IObserver
 {
 public:
     IObserver();
-    virtual void Update(QMap<QString, QList<float>> map) = 0;
+    virtual void Update(DataForTable map) = 0;
 };
 
 class ISubject

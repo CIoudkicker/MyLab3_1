@@ -53,10 +53,8 @@ class diagramwidgets;
 
 class AbstractCreation
 {
-
 public:
-    AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_,
-                     QMap<QString, QList<float>> map_)
+    AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, DataForTable map_)
         :
 
           qchart(qchart_),
@@ -72,7 +70,7 @@ public:
     qreal yValue = 0;
     QChart *qchart;
     QChartView *qcharview;
-    QMap<QString, QList<float>> map;
+    DataForTable map;
     diagramwidgets *d;
 
     void executeAll()
@@ -101,8 +99,7 @@ class Bar : public AbstractCreation
 {
 
 public:
-    Bar(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_,
-        QMap<QString, QList<float>> map_)
+    Bar(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, DataForTable map_)
         : AbstractCreation(d_, qchart_, qcharview_, map_)
     {
     }
@@ -112,7 +109,7 @@ public:
         QStringList categories;
         QStackedBarSeries *series = new QStackedBarSeries(qchart);
 
-        QMap<QString, QList<float>>::const_iterator i = map.begin();
+        DataForTable::const_iterator i = map.begin();
         i++;
         if (i != map.end() + 1) {
             QBarSet *set = new QBarSet("Bar set " + QString::number(11));
@@ -147,15 +144,14 @@ class Pie : public AbstractCreation
 {
 
 public:
-    Pie(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_,
-        QMap<QString, QList<float>> map_)
+    Pie(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, DataForTable map_)
         : AbstractCreation(d_, qchart_, qcharview_, map_)
     {
     }
 
     virtual QChart *MainAlgorithm() override
     {
-        QMap<QString, QList<float>>::const_iterator i = map.begin();
+        DataForTable::const_iterator i = map.begin();
         i++;
         if (i != map.end() + 1) {
             QPieSeries *series = new QPieSeries(qchart);
@@ -196,7 +192,7 @@ public:
     QChart *createBarChart();
     QChart *createPieChart();
     QChart *executeCurrentDiagram();
-    DataTable generateData(QMap<QString, QList<float>> map);
+    DataTable generateData(DataForTable map);
     QChart *getQChartView();
 
     int m_listCount;
@@ -210,12 +206,12 @@ public:
     Data m_data;
     DataList m_datalist;
 
-    virtual void Update(QMap<QString, QList<float>> map);
+    virtual void Update(DataForTable map);
 
 private:
     CalculateSize_TableModel &subject_;
     CurrentDiagram currentDiagram;
-    QMap<QString, QList<float>> map;
+    DataForTable map;
     static int static_number_;
     int number_;
 

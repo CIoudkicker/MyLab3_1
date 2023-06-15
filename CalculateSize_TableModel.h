@@ -26,10 +26,10 @@ public:
     void append(QString path);
     void changeStrat(Context_CalculateSize::Strategies strat, QString path);
     Context_CalculateSize *getContext() { return context; }
-    QMap<QString, QList<float>> getMap() { return map; }
+    DataForTable getMap() { return map; }
 
 private:
-    QMap<QString, QList<float>> map;
+    DataForTable map;
     Context_CalculateSize *context;
     std::list<IObserver *> list_observer_;
 };

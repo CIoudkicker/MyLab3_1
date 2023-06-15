@@ -4,7 +4,6 @@
 
 class Folder_CalculateSize : public ICalculateSize
 {
-
 public:
     Folder_CalculateSize(QString path1) : ICalculateSize(path1) { }
     ~Folder_CalculateSize() { }
