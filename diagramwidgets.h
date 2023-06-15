@@ -43,7 +43,6 @@
 #include "IObserver.h"
 #include "CalculateSize_TableModel.h"
 
-
 using namespace QtCharts;
 
 typedef QPair<QPointF, QString> Data;
@@ -52,69 +51,70 @@ typedef QList<DataList> DataTable;
 
 class diagramwidgets;
 
-class AbstractCreation{
+class AbstractCreation
+{
 
-    public:
+public:
+    AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_,
+                     QMap<QString, QList<float>> map_)
+        :
 
-        AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_) :
+          qchart(qchart_),
+          qcharview(qcharview_),
+          map(map_),
+          d(d_){};
 
-            qchart(qchart_),
-            qcharview(qcharview_),
-            map(map_),
-            d(d_)
-        {};
+    virtual ~AbstractCreation() { }
 
-        virtual ~AbstractCreation(){}
+    float count = 1;
+    QList<float> val;
+    QString name;
+    qreal yValue = 0;
+    QChart *qchart;
+    QChartView *qcharview;
+    QMap<QString, QList<float>> map;
+    diagramwidgets *d;
 
-        float count = 1;
-        QList<float> val;
-        QString name;
-        qreal yValue = 0;
-        QChart *qchart;
-        QChartView *qcharview;
-        QMap<QString, QList<float>> map;
-        diagramwidgets *d;
+    void executeAll()
+    {
 
-        void executeAll(){
+        this->removePlusTitle_Hook("");
+        qchart = this->MainAlgorithm();
+        this->chartViewUpdate();
+        this->setCurrentDiagram(d);
+    }
 
-            this->removePlusTitle_Hook("");
-            qchart = this->MainAlgorithm();
-            this->chartViewUpdate();
-            this->setCurrentDiagram(d);
+    virtual void removePlusTitle_Hook(QString title)
+    {
+        qchart->removeAllSeries();
+        qchart->setTitle(title);
+    }
 
-        }
+    virtual QChart *MainAlgorithm() = 0;
 
-        virtual void removePlusTitle_Hook(QString title){
-            qchart->removeAllSeries();
-            qchart->setTitle(title);
-        }
+    virtual void chartViewUpdate() { qcharview->update(); }
 
-        virtual QChart* MainAlgorithm() = 0;
-
-        virtual void chartViewUpdate(){
-            qcharview->update();
-        }
-
-        virtual void setCurrentDiagram(diagramwidgets *d) = 0;
-
+    virtual void setCurrentDiagram(diagramwidgets *d) = 0;
 };
 
-class Bar : public AbstractCreation{
+class Bar : public AbstractCreation
+{
 
-    public:
+public:
+    Bar(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_,
+        QMap<QString, QList<float>> map_)
+        : AbstractCreation(d_, qchart_, qcharview_, map_)
+    {
+    }
 
-    Bar(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_):
-        AbstractCreation(d_, qchart_, qcharview_, map_)
-    {}
-
-    virtual QChart* MainAlgorithm() override{
+    virtual QChart *MainAlgorithm() override
+    {
         QStringList categories;
         QStackedBarSeries *series = new QStackedBarSeries(qchart);
 
-
         QMap<QString, QList<float>>::const_iterator i = map.begin();
         i++;
-        if(i != map.end()+1){
+        if (i != map.end() + 1) {
             QBarSet *set = new QBarSet("Bar set " + QString::number(11));
             while (i != map.end()) {
                 count += 1;
@@ -126,10 +126,9 @@ class Bar : public AbstractCreation{
                 i++;
             }
             *set << (qreal)100;
-            //series->clear();
+            // series->clear();
             series->append(set);
         }
-
 
         qchart->addSeries(series);
 
@@ -142,21 +141,23 @@ class Bar : public AbstractCreation{
     }
 
     void setCurrentDiagram(diagramwidgets *d) override;
-
 };
 
-class Pie : public AbstractCreation{
+class Pie : public AbstractCreation
+{
 
-    public:
+public:
+    Pie(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_,
+        QMap<QString, QList<float>> map_)
+        : AbstractCreation(d_, qchart_, qcharview_, map_)
+    {
+    }
 
-    Pie(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, QMap<QString, QList<float>> map_):
-        AbstractCreation(d_, qchart_, qcharview_, map_)
-    {}
-
-    virtual QChart* MainAlgorithm() override{
+    virtual QChart *MainAlgorithm() override
+    {
         QMap<QString, QList<float>>::const_iterator i = map.begin();
         i++;
-        if(i != map.end()+1){
+        if (i != map.end() + 1) {
             QPieSeries *series = new QPieSeries(qchart);
 
             while (i != map.end()) {
@@ -170,70 +171,56 @@ class Pie : public AbstractCreation{
                 i++;
             }
             qreal pieSize = 0.5;
-            qreal hPos = (pieSize / 0.98) + (0.1 / (qreal)2);
+            qreal shiftPie = 0.98;
+            qreal hPos = (pieSize / shiftPie) + (0.1 / (qreal)2);
             series->setPieSize(pieSize);
             series->setHorizontalPosition(hPos);
             series->setVerticalPosition(0.5);
             qchart->addSeries(series);
-
-
         }
         return qchart;
     }
 
     void setCurrentDiagram(diagramwidgets *d) override;
-
 };
 
+class diagramwidgets : public IObserver
+{
 
-class diagramwidgets : public IObserver{
+public:
+    enum CurrentDiagram { BarChart = 1, PieChart };
 
-    public:
+    diagramwidgets(CalculateSize_TableModel &subject);
+    ~diagramwidgets();
 
-        enum CurrentDiagram{
-            BarChart = 1,
-            PieChart
-        };
+    QChart *createBarChart();
+    QChart *createPieChart();
+    QChart *executeCurrentDiagram();
+    DataTable generateData(QMap<QString, QList<float>> map);
+    QChart *getQChartView();
 
-        diagramwidgets(CalculateSize_TableModel &subject);
-        ~diagramwidgets();
+    int m_listCount;
+    int m_valueMax;
+    int m_valueCount;
 
-        QChart *createBarChart();
-        QChart *createPieChart();
-        QChart *executeCurrentDiagram();
-        DataTable generateData(QMap<QString, QList<float>> map);
-        QChart *getQChartView();
+    QList<QChartView *> m_charts;
+    QChartView *chartView;
+    QChart *qChart;
+    DataTable m_dataTable;
+    Data m_data;
+    DataList m_datalist;
 
-        int m_listCount;
-        int m_valueMax;
-        int m_valueCount;
+    virtual void Update(QMap<QString, QList<float>> map);
 
-        QList<QChartView *> m_charts;
-        QChartView *chartView;
-        QChart *qChart;
-        DataTable m_dataTable;
-        Data m_data;
-        DataList m_datalist;
+private:
+    CalculateSize_TableModel &subject_;
+    CurrentDiagram currentDiagram;
+    QMap<QString, QList<float>> map;
+    static int static_number_;
+    int number_;
 
-
-        virtual void Update(QMap<QString, QList<float>> map);
-
-
-
-    private:
-
-        CalculateSize_TableModel &subject_;
-        CurrentDiagram currentDiagram;
-        QMap<QString, QList<float>> map;
-        static int static_number_;
-        int number_;
-
-
-        friend void Bar::setCurrentDiagram(diagramwidgets *d);
-        friend void Pie::setCurrentDiagram(diagramwidgets *d);
-
+    friend void Bar::setCurrentDiagram(diagramwidgets *d);
+    friend void Pie::setCurrentDiagram(diagramwidgets *d);
 };
-
-
 
 #endif // DIAGRAMWIDGETS_H

@@ -5,22 +5,19 @@
 
 class IObserver
 {
-    public:
-        IObserver();
-        virtual void Update(QMap<QString, QList<float>> map) = 0;
-
+public:
+    IObserver();
+    virtual void Update(QMap<QString, QList<float>> map) = 0;
 };
 
+class ISubject
+{
 
-class ISubject{
-
-    public:
-
-        ISubject();
-        virtual ~ISubject(){};
-        virtual void Attach(IObserver *observer) = 0;
-        virtual void Detach(IObserver *observer) = 0;
-        virtual void Notify() = 0;
-
+public:
+    ISubject();
+    virtual ~ISubject(){};
+    virtual void Attach(IObserver *observer) = 0;
+    virtual void Detach(IObserver *observer) = 0;
+    virtual void Notify() = 0;
 };
 #endif // IOBSERVER_H
