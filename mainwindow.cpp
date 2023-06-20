@@ -26,7 +26,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->splitter->addWidget(cv);
 
     ui->radioButton->setChecked(true);
+    //    ui->radioButton_2->setChecked(true);
     ui->radioButton_3->setChecked(true);
+    //    ui->radioButton_4->setChecked(true);
+
     setCentralWidget(centralWidget());
 }
 
@@ -57,7 +60,7 @@ void MainWindow::on_radioButton_toggled(bool /*checked*/)
     CalcTableModel->changeStrat(new Type_CalculateSize(fileInfo.absoluteFilePath()),
                                 fileInfo.absoluteFilePath());
 
-    qDebug() << "radio 1.1";
+    qDebug() << fileInfo << "radio 1.1";
 }
 
 void MainWindow::on_radioButton_2_toggled(bool /*checked*/)

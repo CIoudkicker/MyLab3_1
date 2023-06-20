@@ -1,29 +1,7 @@
 #include "CalculateSize_TableModel.h"
 
-CalculateSize_TableModel::CalculateSize_TableModel(QObject *parent) : QAbstractTableModel(parent)
-{
-    map = DataForTable();
-    context = new Context_CalculateSize;
-}
-
-void CalculateSize_TableModel::Attach(IObserver *observer)
-{
-    list_observer_.push_back(observer);
-}
-
-void CalculateSize_TableModel::Detach(IObserver *observer)
-{
-    list_observer_.remove(observer);
-}
-
-void CalculateSize_TableModel::Notify()
-{
-    std::list<IObserver *>::iterator iterator = list_observer_.begin();
-    while (iterator != list_observer_.end()) {
-        (*iterator)->Update(map);
-        ++iterator;
-    }
-}
+CalculateSize_TableModel::CalculateSize_TableModel(QObject *parent)
+    : ModelUpdateTemplate(parent) { }
 
 CalculateSize_TableModel::~CalculateSize_TableModel()
 {
@@ -97,23 +75,22 @@ QVariant CalculateSize_TableModel::headerData(int section, Qt::Orientation orien
     return QVariant();
 }
 
+void CalculateSize_TableModel::RequiredOperations1(QString path)
+{
+    context->changeStrat(context->getStrat(), path);
+}
+
+void CalculateSize_TableModel::RequiredOperations1(ICalculateSize *strat, QString path)
+{
+    context->changeStrat(strat, path);
+}
+
 void CalculateSize_TableModel::append(QString path)
 {
-    beginResetModel();
-
-    context->changeStrat(context->getStrat(), path);
-    map = context->getMap();
-    Notify();
-    endResetModel();
+    UpdateAndNotify(context->getStrat(), path);
 }
 
 void CalculateSize_TableModel::changeStrat(ICalculateSize *strat, QString path)
 {
-
-    beginResetModel();
-
-    context->changeStrat(strat, path);
-    map = context->getMap();
-    Notify();
-    endResetModel();
+    UpdateAndNotify(strat, path);
 }

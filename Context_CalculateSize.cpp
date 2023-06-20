@@ -13,6 +13,7 @@ DataForTable Context_CalculateSize::dirSize(ICalculateSize *calc)
 
 void Context_CalculateSize::changeStrat(ICalculateSize *strategy, QString path)
 {
+    strat = strategy;
     map = dirSize(strategy);
 
     //    switch (strategy) {
