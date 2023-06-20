@@ -10,16 +10,14 @@ class Context_CalculateSize
 {
 
 public:
-    enum Strategies { Folder_CalculateSize = 1, Type_CalculateSize };
-
     DataForTable dirSize(ICalculateSize *calc);
-    void changeStrat(Strategies strategy, QString path);
-    DataForTable getMap() { return map; };
-    Strategies getStrat() { return strat; }
+    void changeStrat(ICalculateSize *strategy, QString path);
+    DataForTable getMap() { return map; }
+    ICalculateSize *getStrat() { return strat; }
 
 private:
     DataForTable map;
-    Strategies strat;
+    ICalculateSize *strat;
 };
 
 #endif // CONTEXT_CALCULATESIZE_H

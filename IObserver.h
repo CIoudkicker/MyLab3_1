@@ -21,4 +21,5 @@ public:
     virtual void Detach(IObserver *observer) = 0;
     virtual void Notify() = 0;
 };
+
 #endif // IOBSERVER_H

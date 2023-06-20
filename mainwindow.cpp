@@ -1,11 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -23,9 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     diagram = new diagramwidgets(*CalcTableModel);
 
-
     diagram->generateData(CalcTableModel->getMap());
-
 
     QChartView *cv = diagram->chartView;
 
@@ -34,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->radioButton->setChecked(true);
     ui->radioButton_3->setChecked(true);
     setCentralWidget(centralWidget());
-
 }
 
 MainWindow::~MainWindow()
@@ -44,48 +37,48 @@ MainWindow::~MainWindow()
     delete CalcTableModel;
 }
 
-
-
-void MainWindow::on_treeView_activated(const QModelIndex &index){
+void MainWindow::on_treeView_activated(const QModelIndex &index)
+{
 
     Currentindex = index;
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
 
-    if(index.isValid()){
+    if (index.isValid()) {
 
         CalcTableModel->append(fileInfo.absoluteFilePath());
     }
 
-    qDebug() << "OPPA on_treeView_activated"<< fileInfo.absoluteFilePath();
+    qDebug() << "OPPA on_treeView_activated" << fileInfo.absoluteFilePath();
 }
-
 
 void MainWindow::on_radioButton_toggled(bool /*checked*/)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
-    CalcTableModel->changeStrat(Context_CalculateSize::Strategies::Folder_CalculateSize, fileInfo.absoluteFilePath());
+    CalcTableModel->changeStrat(new Type_CalculateSize(fileInfo.absoluteFilePath()),
+                                fileInfo.absoluteFilePath());
 
     qDebug() << "radio 1.1";
 }
 
-
 void MainWindow::on_radioButton_2_toggled(bool /*checked*/)
 {
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
-    CalcTableModel->changeStrat(Context_CalculateSize::Strategies::Type_CalculateSize, fileInfo.absoluteFilePath());
+    CalcTableModel->changeStrat(new Folder_CalculateSize(fileInfo.absoluteFilePath()),
+                                fileInfo.absoluteFilePath());
 
     qDebug() << "radio 1.2";
 }
 
-
-void MainWindow::on_radioButton_3_toggled(bool /*checked*/){
+void MainWindow::on_radioButton_3_toggled(bool /*checked*/)
+{
 
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     diagram->generateData(CalcTableModel->getMap());
     diagram->createBarChart();
 }
 
-void MainWindow::on_radioButton_4_toggled(bool /*checked*/){
+void MainWindow::on_radioButton_4_toggled(bool /*checked*/)
+{
 
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     diagram->generateData(CalcTableModel->getMap());

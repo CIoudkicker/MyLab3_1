@@ -16,10 +16,13 @@
 #include <QModelIndex>
 #include <QDebug>
 #include "diagramwidgets.h"
-
+#include "Folder_CalculateSize.h"
+#include "Type_CalculateSize.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 using namespace QtCharts;
@@ -51,6 +54,5 @@ private:
     diagramwidgets *diagram;
     CalculateSize_TableModel *CalcTableModel;
     QGroupBox *groupbox();
-
 };
 #endif // MAINWINDOW_H

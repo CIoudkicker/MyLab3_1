@@ -107,7 +107,7 @@ void CalculateSize_TableModel::append(QString path)
     endResetModel();
 }
 
-void CalculateSize_TableModel::changeStrat(Context_CalculateSize::Strategies strat, QString path)
+void CalculateSize_TableModel::changeStrat(ICalculateSize *strat, QString path)
 {
 
     beginResetModel();

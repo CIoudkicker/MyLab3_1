@@ -24,7 +24,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
     void append(QString path);
-    void changeStrat(Context_CalculateSize::Strategies strat, QString path);
+    void changeStrat(ICalculateSize *strat, QString path);
     Context_CalculateSize *getContext() { return context; }
     DataForTable getMap() { return map; }
 
