@@ -51,13 +51,14 @@ public:
 
     diagramwidgets *d;
 
-    void executeAll()
+    QChart executeAll()
     {
 
         this->removePlusTitle_Hook("");
         qchart = this->MainAlgorithm();
         this->chartViewUpdate();
         this->setCurrentDiagram(d);
+        return QChart;
     }
 
     virtual void removePlusTitle_Hook(QString title)

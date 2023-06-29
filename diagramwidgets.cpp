@@ -22,46 +22,17 @@ void diagramwidgets::Update(DataForTable map)
     executeCurrentDiagram();
 }
 
-QChart *diagramwidgets::createBarChart()
+void diagramwidgets::changeChart(AbstractCreation *newChart)
 {
-
-    // float count = -1;
-    QList<float> val;
-    QString name;
-    // qreal yValue(0);
-
-    AbstractCreation *bar = new Bar(this, chartView, map);
-
-    bar->executeAll();
-    delete bar;
-    return qChart;
+    if (actualChart != nullptr) {
+        delete actualChart;
+    }
+    actualChart = actualChart;
 }
 
-QChart *diagramwidgets::createPieChart()
-{
-    // float count = -1;
-    QList<float> val;
-    QString name;
-    // qreal yValue(0);
-
-    AbstractCreation *pie = new Pie(this, chartView, map);
-
-    qChart = pie->executeAll();
-    delete pie;
-    return qChart;
-}
 QChart *diagramwidgets::executeCurrentDiagram()
 {
-    switch (currentDiagram) {
-
-    case BarChart:
-        createBarChart();
-        break;
-
-    case PieChart:
-        createPieChart();
-        break;
-    }
+    qChart = actualChart->executeAll();
     return qChart;
 }
 

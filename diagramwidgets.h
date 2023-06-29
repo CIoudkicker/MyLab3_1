@@ -38,9 +38,8 @@ public:
     diagramwidgets(CalculateSize_TableModel &subject);
     ~diagramwidgets();
 
-    QChart *createBarChart();
-    QChart *createPieChart();
     QChart *executeCurrentDiagram();
+    void changeChart(AbstractCreatio *newChartn);
     DataTable generateData(DataForTable map);
     QChart *getQChartView();
 
@@ -54,6 +53,7 @@ public:
     DataTable m_dataTable;
     Data m_data;
     DataList m_datalist;
+    AbstractCreation createChart;
 
     virtual void Update(DataForTable map);
 
@@ -62,9 +62,6 @@ private:
     DataForTable map;
     static int static_number_;
     int number_;
-
-    friend void BarChart::setCurrentDiagram(diagramwidgets *d);
-    friend void PieChart::setCurrentDiagram(diagramwidgets *d);
 };
 
 #endif // DIAGRAMWIDGETS_H

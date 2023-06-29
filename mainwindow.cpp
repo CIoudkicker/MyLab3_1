@@ -77,7 +77,8 @@ void MainWindow::on_radioButton_3_toggled(bool /*checked*/)
 
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     diagram->generateData(CalcTableModel->getMap());
-    diagram->createBarChart();
+    diagram->changeChart(new BarChart);
+    diagram->executeCurrentDiagram();
 }
 
 void MainWindow::on_radioButton_4_toggled(bool /*checked*/)
@@ -85,5 +86,6 @@ void MainWindow::on_radioButton_4_toggled(bool /*checked*/)
 
     QFileInfo fileInfo = leftDirFileSys->fileInfo(Currentindex);
     diagram->generateData(CalcTableModel->getMap());
-    diagram->createPieChart();
+    diagram->changeChart(new PieChart);
+    diagram->executeCurrentDiagram();
 }

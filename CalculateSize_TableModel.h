@@ -1,9 +1,8 @@
 #ifndef CALCULATESIZE_TABLEMODEL_H
 #define CALCULATESIZE_TABLEMODEL_H
 
-// #include <QAbstractTableModel>
 #include "Context_CalculateSize.h"
-// #include "IObserver.h"
+
 #include "ModelUpdateTemplate.h"
 
 class CalculateSize_TableModel : public ModelUpdateTemplate

@@ -25,7 +25,6 @@ DataForTable Type_CalculateSize::dirSize(const QString &path, int level, DataFor
     QList<float> val;
     DataForTable map = map1;
     int givenSize = 0;
-    // dir.entryInfoList(QDir::Files) returns file information
 
     qDebug().noquote().nospace() << space1.repeated(level - 1) << space2;
 
@@ -48,7 +47,7 @@ DataForTable Type_CalculateSize::dirSize(const QString &path, int level, DataFor
             map[fileInfo.suffix()] = val;
         }
     }
-    // dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot) returns all subdirectories and filters them
+
     foreach (QString subDir, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden)) {
         // If there is a subdirectory, recursive call dirFileSize () function
         folderName = subDir;
@@ -63,8 +62,7 @@ DataForTable Type_CalculateSize::dirSize(const QString &path, int level, DataFor
                 << space1.repeated(level) << "size of {" << subDir << "} is " << givenSize
                 << " [summary size is " << Type_CalculateSize::size << "]";
     }
-    // qDebug().noquote() << space.repeated(level) <<"fileName is "<< fileName <<"folderName is "<<
-    // folderName <<"size is "<< size;
+
     return map;
 }
 
@@ -77,7 +75,7 @@ DataForTable Type_CalculateSize::dirSize(const QString &path)
     float size = 0;
     QList<float> val;
     DataForTable map;
-    // dir.entryInfoList(QDir::Files) returns file information
+
     foreach (QFileInfo fileInfo, dir.entryInfoList(QDir::Files | QDir::Hidden)) {
         // Calculate the file size
         Type_CalculateSize::size += fileInfo.size();
@@ -94,9 +92,8 @@ DataForTable Type_CalculateSize::dirSize(const QString &path)
         }
     }
 
-    // dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot) returns all subdirectories and filters them
     foreach (QString subDir, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden)) {
-        // If there is a subdirectory, recursive call dirFileSize () function
+
         folderName = subDir;
         qDebug() << "";
         qDebug().noquote().nospace()

@@ -39,11 +39,6 @@ public:
         }
         return qchart;
     }
-
-    void setCurrentDiagram(diagramwidgets *d) override
-    {
-        d->currentDiagram = diagramwidgets::CurrentDiagram::PieChart;
-    }
 };
 
 #endif // PIECHART_H

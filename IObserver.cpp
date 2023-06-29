@@ -1,13 +1,3 @@
 #include "IObserver.h"
 
-IObserver::IObserver()
-{
-
-}
-
-
-ISubject::ISubject()
-{
-
-}
-
+IObserver::IObserver() { }

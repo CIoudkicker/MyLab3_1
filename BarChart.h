@@ -31,7 +31,7 @@ public:
                 i++;
             }
             *set << (qreal)100;
-            // series->clear();
+
             series->append(set);
         }
 
@@ -43,13 +43,6 @@ public:
         qchart->setAxisX(axis, series);
 
         return qchart;
-    }
-
-    void setCurrentDiagram(diagramwidgets *d) override;
-
-    void setCurrentDiagram(diagramwidgets *d)
-    {
-        d->currentDiagram = diagramwidgets::CurrentDiagram::BarChart;
     }
 };
 
