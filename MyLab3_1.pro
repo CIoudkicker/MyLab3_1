@@ -20,26 +20,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AbstractCreation.cpp \
+    BarChart.cpp \
     CalculateSize_TableModel.cpp \
     Context_CalculateSize.cpp \
-    Context_Diagrams.cpp \
     Folder_CalculateSize.cpp \
     ICalculateSize.cpp \
     IObserver.cpp \
+    ISubject.cpp \
     ModelUpdateTemplate.cpp \
+    PieChart.cpp \
     Type_CalculateSize.cpp \
     diagramwidgets.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    AbstractCreation.h \
+    BarChart.h \
     CalculateSize_TableModel.h \
     Context_CalculateSize.h \
-    Context_Diagrams.h \
     Folder_CalculateSize.h \
     ICalculateSize.h \
     IObserver.h \
+    ISubject.h \
     ModelUpdateTemplate.h \
+    PieChart.h \
     Type_CalculateSize.h \
     diagramwidgets.h \
     mainwindow.h

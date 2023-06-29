@@ -30,7 +30,7 @@ QChart *diagramwidgets::createBarChart()
     QString name;
     // qreal yValue(0);
 
-    AbstractCreation *bar = new Bar(this, qChart, chartView, map);
+    AbstractCreation *bar = new Bar(this, chartView, map);
 
     bar->executeAll();
     delete bar;
@@ -44,9 +44,9 @@ QChart *diagramwidgets::createPieChart()
     QString name;
     // qreal yValue(0);
 
-    AbstractCreation *pie = new Pie(this, qChart, chartView, map);
+    AbstractCreation *pie = new Pie(this, chartView, map);
 
-    pie->executeAll();
+    qChart = pie->executeAll();
     delete pie;
     return qChart;
 }
@@ -95,14 +95,4 @@ DataTable diagramwidgets::generateData(DataForTable map)
     this->map = map;
     m_dataTable = dataTable;
     return dataTable;
-}
-
-void Bar::setCurrentDiagram(diagramwidgets *d)
-{
-    d->currentDiagram = diagramwidgets::CurrentDiagram::BarChart;
-}
-
-void Pie::setCurrentDiagram(diagramwidgets *d)
-{
-    d->currentDiagram = diagramwidgets::CurrentDiagram::PieChart;
 }

@@ -12,36 +12,14 @@
 #include <QHeaderView>
 #include <QStatusBar>
 #include <QDebug>
-#include <QtWidgets/QWidget>
-#include <QtCharts/QChart>
-#include <QtCharts/QChartGlobal>
-#include <QtCharts/QChartView>
-#include <QtCharts/QPieSeries>
-#include <QtCharts/QPieSlice>
-#include <QtCharts/QAbstractBarSeries>
-#include <QtCharts/QPercentBarSeries>
-#include <QtCharts/QStackedBarSeries>
-#include <QtCharts/QBarSeries>
-#include <QtCharts/QBarSet>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QSplineSeries>
-#include <QtCharts/QScatterSeries>
-#include <QtCharts/QAreaSeries>
-#include <QtCharts/QLegend>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QFormLayout>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QSpinBox>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QLabel>
-#include <QtCore/QTime>
-#include <QtCharts/QBarCategoryAxis>
 #include <QMap>
 #include <QList>
 #include <QString>
 #include "IObserver.h"
 #include "CalculateSize_TableModel.h"
+#include "AbstractCreation.h"
+#include "PieChart.h"
+#include "BarChart.h"
 
 using namespace QtCharts;
 
@@ -50,135 +28,6 @@ typedef QList<Data> DataList;
 typedef QList<DataList> DataTable;
 
 class diagramwidgets;
-
-class AbstractCreation
-{
-public:
-    AbstractCreation(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, DataForTable map_)
-        :
-
-          qchart(qchart_),
-          qcharview(qcharview_),
-          map(map_),
-          d(d_){};
-
-    virtual ~AbstractCreation() { }
-
-    float count = 1;
-    QList<float> val;
-    QString name;
-    qreal yValue = 0;
-    QChart *qchart;
-    QChartView *qcharview;
-    DataForTable map;
-    diagramwidgets *d;
-
-    void executeAll()
-    {
-
-        this->removePlusTitle_Hook("");
-        qchart = this->MainAlgorithm();
-        this->chartViewUpdate();
-        this->setCurrentDiagram(d);
-    }
-
-    virtual void removePlusTitle_Hook(QString title)
-    {
-        qchart->removeAllSeries();
-        qchart->setTitle(title);
-    }
-
-    virtual QChart *MainAlgorithm() = 0;
-
-    virtual void chartViewUpdate() { qcharview->update(); }
-
-    virtual void setCurrentDiagram(diagramwidgets *d) = 0;
-};
-
-class Bar : public AbstractCreation
-{
-
-public:
-    Bar(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, DataForTable map_)
-        : AbstractCreation(d_, qchart_, qcharview_, map_)
-    {
-    }
-
-    virtual QChart *MainAlgorithm() override
-    {
-        QStringList categories;
-        QStackedBarSeries *series = new QStackedBarSeries(qchart);
-
-        DataForTable::const_iterator i = map.begin();
-        i++;
-        if (i != map.end() + 1) {
-            QBarSet *set = new QBarSet("Bar set " + QString::number(11));
-            while (i != map.end()) {
-                count += 1;
-                val = i.value();
-                name = QString(i.key());
-                yValue = val[1];
-                *set << yValue;
-                categories << categories << name;
-                i++;
-            }
-            *set << (qreal)100;
-            // series->clear();
-            series->append(set);
-        }
-
-        qchart->addSeries(series);
-
-        QBarCategoryAxis *axis = new QBarCategoryAxis();
-        axis->append(categories);
-        qchart->createDefaultAxes();
-        qchart->setAxisX(axis, series);
-
-        return qchart;
-    }
-
-    void setCurrentDiagram(diagramwidgets *d) override;
-};
-
-class Pie : public AbstractCreation
-{
-
-public:
-    Pie(diagramwidgets *d_, QChart *qchart_, QChartView *qcharview_, DataForTable map_)
-        : AbstractCreation(d_, qchart_, qcharview_, map_)
-    {
-    }
-
-    virtual QChart *MainAlgorithm() override
-    {
-        DataForTable::const_iterator i = map.begin();
-        i++;
-        if (i != map.end() + 1) {
-            QPieSeries *series = new QPieSeries(qchart);
-
-            while (i != map.end()) {
-                count += 1;
-                val = i.value();
-                name = QString(i.key());
-                yValue = val[1];
-                QPieSlice *slice = series->append(name, yValue);
-                slice->setLabelVisible();
-                slice->setExploded();
-                i++;
-            }
-            qreal pieSize = 0.5;
-            qreal shiftPie = 0.98;
-            qreal hPos = (pieSize / shiftPie) + (0.1 / (qreal)2);
-            series->setPieSize(pieSize);
-            series->setHorizontalPosition(hPos);
-            series->setVerticalPosition(0.5);
-            qchart->addSeries(series);
-        }
-        return qchart;
-    }
-
-    void setCurrentDiagram(diagramwidgets *d) override;
-};
 
 class diagramwidgets : public IObserver
 {
@@ -210,13 +59,12 @@ public:
 
 private:
     CalculateSize_TableModel &subject_;
-    CurrentDiagram currentDiagram;
     DataForTable map;
     static int static_number_;
     int number_;
 
-    friend void Bar::setCurrentDiagram(diagramwidgets *d);
-    friend void Pie::setCurrentDiagram(diagramwidgets *d);
+    friend void BarChart::setCurrentDiagram(diagramwidgets *d);
+    friend void PieChart::setCurrentDiagram(diagramwidgets *d);
 };
 
 #endif // DIAGRAMWIDGETS_H
